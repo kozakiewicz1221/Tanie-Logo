@@ -1,0 +1,113 @@
+$radius: 11px;
+$shadow: 0px 20px 25px -10px rgba(0, 0, 0, 0.05);
+$shadow2: 0px 10px 15px -5px rgba(0, 0, 0, 0.05);
+
+
+h3,
+
+h4 {
+    color: #17B5B5;
+}
+
+.form-inner-wrap {
+    display: flex;
+}
+
+.form-left-col {
+    width: 30%;
+    background: #F0F0F0;
+    padding: 1.5em;
+}
+
+.form-right-col {
+    width: 70%;
+    padding: 1.5em;
+    background: #F6F9FD;
+}
+
+.span-price {
+    color: #7553BB;
+    font-weight: 700
+}
+
+.total-amount-box {
+    width: 100%;
+    background: white;
+    padding: 25px;
+    border-radius: $radius;
+    box-shadow: $shadow;
+
+}
+
+.amount-inner {
+    color: #7553BB;
+    font-size: 25px;
+    font-weight: 900;
+}
+
+
+
+
+.payment-wrapper {
+
+    margin-top: 20px;
+}
+
+.form-right-col label,
+.payment-wrapper label {
+    background: rgba(255, 255, 255, 1);
+    padding: 10px 15px;
+    border-radius: $radius;
+    margin-right: 20px;
+    transition: 0.3s all;
+    box-shadow: $shadow2;
+    cursor: pointer;
+    position: relative;
+}
+
+.form-right-col label:hover,
+.payment-wrapper label:hover {
+    background: #17B5B5;
+    color: white;
+    padding: 10px 15px;
+    border-radius: $radius;
+    margin-right: 20px;
+    transition: 0.3s all;
+}
+
+input[type="checkbox"]:checked+label,
+input[type="radio"]:checked+label {
+    background: #17B5B5;
+    color: white;
+    padding: 10px 15px;
+    border-radius: $radius;
+    margin-right: 20px;
+    transition: 0.2s all;
+    box-shadow: $shadow2;
+    transform: translateY(-5px);
+
+
+}
+
+input[type="checkbox"]:checked+label:hover,
+input[type="radio"]:checked+label:hover {
+    background: #06A7A7;
+}
+
+.form-right-col input[type="radio"],
+.form-right-col input[type="checkbox"],
+.payment-wrapper input[type="radio"],
+.payment-wrapper input[type="checkbox"] {
+    display: none
+}
+
+.info-icon {
+    position: absolute;
+    bottom: 0;
+}
+
+.tooltip {
+    border-radius: $radius;
+    background: #7553BB !important;
+
+}
