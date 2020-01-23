@@ -8,8 +8,8 @@ $color2: rgb(124, 90, 190);
 h3 {
     color: $color1;
     margin-bottom: 15px;
-    text-transform: uppercase;
     letter-spacing: 1px;
+    font-weight: 600;
 }
 
 h4 {
@@ -18,22 +18,12 @@ h4 {
     font-size: 16px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-weight: 100;
+
 }
 
 .form-inner-wrap {
     display: flex;
-}
-
-.form-left-col {
-    width: 25%;
-    background: #F0F0F0;
-    padding: 3.5em;
-}
-
-.form-right-col {
-    width: 75%;
-    padding: 3.5em;
-    background: #F6F9FD;
 }
 
 .span-price {
@@ -42,6 +32,28 @@ h4 {
     margin-left: 5px
 }
 
+.error {
+    color: red;
+    font-size: 14px;
+}
+
+
+//--------- LEFT COLUMN-----------------
+.form-left-col {
+    width: 25%;
+    background: #F0F0F0;
+    padding: 3.5em;
+
+}
+
+.sticky {
+    position: sticky;
+    top: 70px;
+    width: 100%;
+
+}
+
+
 .total-amount-box {
     width: 100%;
     background: white;
@@ -49,7 +61,6 @@ h4 {
     border-radius: $radius;
     margin-bottom: 10px;
     box-shadow: $shadow2;
-
 }
 
 .amount-inner {
@@ -65,14 +76,20 @@ h4 {
 
 .policy-accept label {
     margin-left: 8px;
-    font-size: 14px;
+    font-size: 13px;
     color: grey;
     font-weight: 600;
 }
 
 .policy-accept a {
-    color: $color2;
+    color: $color1;
     text-decoration: none;
+    transition: 0.2s all;
+
+    &:hover {
+        transition: 0.2s all;
+        color: $color2
+    }
 }
 
 input[type="checkbox"] {
@@ -119,6 +136,10 @@ button.submit {
     margin-bottom: 0px;
 }
 
+.payment-wrapper label:hover {
+    background: rgba(250, 000, 250, 0.1);
+}
+
 .inner-payment {
     display: flex;
     flex-direction: row;
@@ -150,50 +171,6 @@ button.submit {
 }
 
 
-.form-right-col label {
-    background: rgba(255, 255, 255, 1);
-    color: $color1;
-    padding: 10px 15px;
-    border-radius: $radius;
-    margin-right: 20px;
-    transition: 0.3s all;
-    box-shadow: $shadow2;
-    cursor: pointer;
-    position: relative;
-}
-
-.form-right-col label:hover,
-.payment-wrapper label:hover {
-    background: rgba(250, 000, 250, 0.1);
-
-
-
-}
-
-input[type="checkbox"]:checked+label,
-input[type="radio"]:checked+label {
-    background: $color1;
-    color: white;
-    transition: 0.2s all;
-    box-shadow: $shadow2;
-
-
-}
-
-input[type="checkbox"]:checked+label:hover,
-input[type="radio"]:checked+label:hover {
-    background: $color1;
-    box-shadow: $shadow2;
-
-}
-
-.form-right-col input[type="radio"],
-.form-right-col input[type="checkbox"],
-.payment-wrapper input[type="radio"],
-.payment-wrapper input[type="checkbox"] {
-    display: none
-}
-
 .info-icon {
     font-size: 15px;
     position: absolute;
@@ -220,8 +197,88 @@ input[type="radio"]:checked+label:hover {
         box-shadow: $shadow2;
         color: $color1;
         font-size: 14px;
+        transition: 0.3s all;
+
+        &:hover {
+            transition: 0.3s all;
+            background: rgba(250, 000, 250, 0.1);
+        }
+
+        &:focus {
+            transition: 1s all;
+            background: rgba(250, 000, 250, 0.1);
+        }
     }
 }
+
+
+
+
+
+//--------- RIGHT COLUMN-----------------
+
+.form-right-col {
+    width: 75%;
+    padding: 3.5em;
+    padding-right: 20%;
+    background: #F6F9FD;
+}
+
+.form-right-col label {
+    background: rgba(255, 255, 255, 1);
+    color: $color1;
+    padding: 10px 15px;
+    border-radius: $radius;
+    margin-right: 10px;
+    transition: 0.3s all;
+    box-shadow: $shadow2;
+    cursor: pointer;
+    position: relative;
+}
+
+
+.form-right-col label:hover {
+    background: rgba(250, 000, 250, 0.1);
+}
+
+.flex-inputs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-align: center;
+
+}
+
+.flex-inputs div {
+    text-align: center;
+    margin-bottom: 30px;
+    ;
+}
+
+input[type="checkbox"]:checked+label,
+input[type="radio"]:checked+label {
+    background: $color1;
+    color: white;
+    transition: 0.2s all;
+    box-shadow: $shadow2;
+
+
+}
+
+input[type="checkbox"]:checked+label:hover,
+input[type="radio"]:checked+label:hover {
+    background: $color1;
+    box-shadow: $shadow2;
+
+}
+
+.form-right-col input[type="radio"],
+.form-right-col input[type="checkbox"],
+.payment-wrapper input[type="radio"],
+.payment-wrapper input[type="checkbox"] {
+    display: none
+}
+
 
 span.number {
     background: $color1;

@@ -55,7 +55,7 @@ a {
 
 a:active,
 a:hover {
-  outline-width: 0;
+  color: rgba(250, 000, 250, 0.1);
 }
 
 abbr[title] {
