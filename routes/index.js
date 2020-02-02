@@ -1,38 +1,70 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
 var app = express();
-var cors = require('cors')
-const nodemailer = require('nodemailer')
-const nodemail = require('../nodemailer')
+var path = require('path');
 
+
+
+
+// NODEMAILER
+const nodemailer = require('nodemailer')
+
+// MULTER
+var multer = require('multer')
+var upload = multer({ dest: __dirname + '/uploads' })
+
+
+// FIREBASE CLOUD FIRESTORE
+const admin = require('firebase-admin');
+const serviceAccount = require('../ServiceAccountKey.json')
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+const db = admin.firestore();
+
+
+
+// CORS
+var cors = require('cors')
 app.use(cors())
 var corsOptions = {
-  origin: 'http:/localhost:8888',
+  origin: 'http:/localhost:8000/',
   optionsSuccessStatus: 200
-  // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
+// BODY PARSER
+var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
-/* GET home page. */
+// ROUTER /
+
 router.get('/', function (req, res, next) {
-  res.redirect("https://google.pl")
+  res.sendFile(path.join(__dirname, '../gatsby/public', 'index.html'));
 
 });
 
+// ORDER POST REQUERS
+router.post('/order', cors(corsOptions), upload.single('avatar'), function (req, res) {
 
-// define the order route
-router.post('/order', cors(), function (req, res) {
   console.log(req.body);
+
+  let saveToDb = db.collection('orders').doc(req.body.name).set(req.body);
+
   const output = `
   <p> You have a new request </p>
   <h2> Contact Detail</h2>
   <ul>
-  <li>${req.body.Name}</li>
-  <li>${req.body.Mail}</li>
-  <li>${req.body.Message}</li>
+  <li>Imie i nazwisko: ${req.body.name}</li>
+  <li>E-mail: ${req.body.email}</li>
+  <li>telefon: ${req.body.tel}</li>
+  <li>Płatnośc: ${req.body.payment}</li>
+  <li>Razem: ${req.body.razem}</li>
+  <li>Ile logo?: ${req.body.logoQty}</li>
+  <li>Dodatkowe uslugi: ${req.body.dodatkowe}</li>
+  <li>Opis: ${req.body.description}</li>
+  <li>Prawa autorskie: ${req.body.license}</li>
+  <li>Czas realizacji: ${req.body.time}</li>
   </ul>
   `
 
@@ -40,9 +72,9 @@ router.post('/order', cors(), function (req, res) {
   <p> Dziękujemy za zamówienie </p>
   <h2> Contact Detail</h2>
   <ul>
-  <li>${req.body.Name}</li>
-  <li>${req.body.Mail}</li>
-  <li>${req.body.Message}</li>
+  <li>${req.body.name}</li>
+  <li>${req.body.email}</li>
+  <li>${req.body.message}</li>
   </ul>
   `
 
@@ -63,26 +95,25 @@ router.post('/order', cors(), function (req, res) {
         rejectUnauthorized: false
       }
     });
-    let list = ['emir.alobedi@gmail.com', 'kontakt@clickdesign.pl', 'kontakt@tanie-logo.pl']
-    let confirmationAdresse = ['kontakt@tanie-logo.pl']
+    let list = ['kontakt@clickdesign.pl']
+    let confirmationAdresse = [req.body.email]
 
     // send mail with defined transport bject
     let info = await transporter.sendMail({
-      from: req.body.Mail, // sender address
+      from: req.body.mail, // sender address
       to: list, // list of receivers
       subject: 'Hello ✔', // Subject line
       text: 'Hello world?', // plain text body
       html: output // html body
     });
     let confirmMail = await transporter.sendMail({
-      from: req.body.Mail, // sender address
+      from: req.body.mail, // sender address
       to: confirmationAdresse, // list of receivers
       subject: 'Hello ✔', // Subject line
       text: 'Hello world?', // plain text body
       html: confirmationOutput // html body
     });
 
-    console.log("Message sent!")
   }
 
   main().catch(console.error);
@@ -90,7 +121,6 @@ router.post('/order', cors(), function (req, res) {
 
 
 
-  res.redirect("https://google.pl")
 })
 
 module.exports = router;

@@ -1,31 +1,27 @@
 import React from "react"
 import { Link } from "gatsby"
-
-import Layout from "../components/layout"
-import Image from "../components/image"
-import Contactform from "../components/contactform"
-
 import SEO from "../components/seo"
+import Layout from "../components/layout"
+import bgvideo from "../data/video/tanie-logo-tlo.mp4"
+import "../style/form.scss"
 
-const IndexPage = () => {
-
+const Home = () => {
 
 
   return (
+    <div>
+      <SEO title="Page two" />
+      <div class="fullscreen-bg">
+        <video className="fullscreen-bg__video" src={bgvideo} type="video/mp4" autoPlay muted loop >
+        </video>
 
-
-    <Layout>
-      <SEO title="Home" />
-      <h1>Hi people</h1>
-      <p>Welcome to your new Gatsby site.</p>
-      <p>Now go build something great.</p>
-      <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-
-        <Contactform />
-        <Image />
       </div>
-      <Link to="/form/">Go to page 2</Link>
-    </Layout>)
+
+
+      <Link to="/zamowienie">Zamowienie</Link></div>
+
+
+  )
 }
 
-export default IndexPage
+export default Home

@@ -19,12 +19,116 @@ h4 {
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 100;
+}
 
+p {
+    font-size: 15px;
 }
 
 .form-inner-wrap {
     display: flex;
 }
+
+.sticky {
+    position: sticky;
+    top: 50px;
+}
+
+@media only screen and (max-width: 1300px) {
+    .sticky {
+        position: relative;
+        top: 0;
+    }
+}
+
+@media only screen and (max-width: 1086px) {
+    .inner-payment {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .inner-payment div {
+        width: 100%;
+        flex-grow: 1;
+        padding: 0px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    .totalprice {
+        font-size: 18px !important;
+    }
+
+    .order-list li {
+        font-size: 12px !important;
+        font-weight: 400 !important;
+    }
+
+    .form-left-col,
+    .form-right-col {
+        padding: 15px !important;
+    }
+
+}
+
+@media only screen and (max-width: 666px) {
+
+    .form-inner-wrap {
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+
+    .form-right-col {
+        width: 100% !important;
+
+    }
+
+    .form-left-col {
+        width: 100% !important;
+        padding-top: 30px !important;
+    }
+
+    .form-right-col label {
+        font-size: 14px !important;
+    }
+
+    .policy-accept {
+        margin-top: -35px !important;
+        margin-bottom: 5px !important;
+        margin-left: 10px;
+
+    }
+
+
+    .inner-payment {
+        display: flex;
+        flex-direction: row !important;
+    }
+
+    .inner-payment div {
+        width: 33% !important;
+        flex-grow: 1;
+        padding: 0px;
+    }
+}
+
+
+@media only screen and (min-width: 1780px) {
+    .form-right-col {
+        padding: 3.5em !important;
+
+    }
+
+    .form-left-col {
+        padding: 3.5em 5.5em !important;
+    }
+
+}
+
 
 .span-price {
     color: $color2;
@@ -40,18 +144,11 @@ h4 {
 
 //--------- LEFT COLUMN-----------------
 .form-left-col {
-    width: 25%;
+    width: 30%;
     background: #F0F0F0;
-    padding: 3.5em;
-
+    padding: 1.5em;
 }
 
-.sticky {
-    position: sticky;
-    top: 70px;
-    width: 100%;
-
-}
 
 
 .total-amount-box {
@@ -211,15 +308,44 @@ button.submit {
     }
 }
 
+.order-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 0px;
 
+}
 
+.order-list li {
+    background: white;
+    padding: 0px 7px;
+    margin-right: 5px;
+    margin-bottom: 7px;
+    border-radius: $radius;
+    font-size: 12px;
+    color: $color1;
+    font-weight: 600;
+    box-shadow: $shadow2;
 
+}
+
+.totalprice {
+    font-size: 23px;
+    color: $color1;
+    text-transform: uppercase;
+    font-weight: 900;
+    margin-top: - 15px;
+}
+
+.subtitle {
+    font-size: 15px;
+}
 
 //--------- RIGHT COLUMN-----------------
 
 .form-right-col {
-    width: 75%;
-    padding: 3.5em;
+    width: 70%;
+    padding: 1.5em;
     padding-right: 20%;
     background: #F6F9FD;
 }
@@ -227,13 +353,15 @@ button.submit {
 .form-right-col label {
     background: rgba(255, 255, 255, 1);
     color: $color1;
-    padding: 10px 15px;
+    padding: 7px 13px;
     border-radius: $radius;
     margin-right: 10px;
     transition: 0.3s all;
     box-shadow: $shadow2;
     cursor: pointer;
     position: relative;
+    font-size: 15px;
+
 }
 
 
@@ -251,26 +379,20 @@ button.submit {
 
 .flex-inputs div {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     ;
 }
 
-input[type="checkbox"]:checked+label,
-input[type="radio"]:checked+label {
+.form-right-col input[type="checkbox"]:checked+label,
+.form-right-col input[type="radio"]:checked+label,
+.payment-wrapper input[type="radio"]:checked+label,
+.payment-wrapper input[type="checkbox"]:checked+label {
     background: $color1;
     color: white;
     transition: 0.2s all;
     box-shadow: $shadow2;
-
-
 }
 
-input[type="checkbox"]:checked+label:hover,
-input[type="radio"]:checked+label:hover {
-    background: $color1;
-    box-shadow: $shadow2;
-
-}
 
 .form-right-col input[type="radio"],
 .form-right-col input[type="checkbox"],
@@ -299,4 +421,23 @@ textarea {
     box-shadow: $shadow2;
     color: $color1;
     padding-top: 15px;
+}
+
+.fullscreen-bg {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden !important;
+    width: 100vw;
+}
+
+.fullscreen-bg__video {
+    left: 0;
+    max-width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    z-index: -100;
+
 }
