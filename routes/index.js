@@ -1,55 +1,53 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 var app = express();
-var path = require('path');
-
-
-
+var path = require("path");
 
 // NODEMAILER
-const nodemailer = require('nodemailer')
+const nodemailer = require("nodemailer");
 
 // MULTER
-var multer = require('multer')
-var upload = multer({ dest: __dirname + '/uploads' })
-
+var multer = require("multer");
+var upload = multer({ dest: __dirname + "/uploads" });
 
 // FIREBASE CLOUD FIRESTORE
-const admin = require('firebase-admin');
-const serviceAccount = require('../ServiceAccountKey.json')
+const admin = require("firebase-admin");
+const serviceAccount = require("../ServiceAccountKey.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 const db = admin.firestore();
 
-
-
 // CORS
-var cors = require('cors')
-app.use(cors())
+var cors = require("cors");
+app.use(cors());
 var corsOptions = {
-  origin: 'http:/localhost:8000/',
+  origin: "http:/localhost:8000/",
   optionsSuccessStatus: 200
-}
+};
 
 // BODY PARSER
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 // ROUTER /
 
-router.get('/', function (req, res, next) {
-  res.sendFile(path.join(__dirname, '../gatsby/public', 'index.html'));
-
+router.get("/", function(req, res, next) {
+  res.send("Home");
 });
 
 // ORDER POST REQUERS
-router.post('/order', cors(corsOptions), upload.single('avatar'), function (req, res) {
-
+router.post("/order", cors(corsOptions), upload.single("avatar"), function(
+  req,
+  res
+) {
   console.log(req.body);
 
-  let saveToDb = db.collection('orders').doc(req.body.name).set(req.body);
+  let saveToDb = db
+    .collection("orders")
+    .doc(req.body.name)
+    .set(req.body);
 
   const output = `
   <p> You have a new request </p>
@@ -66,7 +64,7 @@ router.post('/order', cors(corsOptions), upload.single('avatar'), function (req,
   <li>Prawa autorskie: ${req.body.license}</li>
   <li>Czas realizacji: ${req.body.time}</li>
   </ul>
-  `
+  `;
 
   const confirmationOutput = `
   <p> Dziękujemy za zamówienie </p>
@@ -76,7 +74,7 @@ router.post('/order', cors(corsOptions), upload.single('avatar'), function (req,
   <li>${req.body.email}</li>
   <li>${req.body.message}</li>
   </ul>
-  `
+  `;
 
   // async..await is not allowed in global scope, must use a wrapper
   async function main() {
@@ -85,42 +83,38 @@ router.post('/order', cors(corsOptions), upload.single('avatar'), function (req,
 
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-      host: 'mail.clickdesign.pl',
+      host: "mail.clickdesign.pl",
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
-        user: 'kontakt@clickdesign.pl', // generated ethereal user
-        pass: '!Loleq123' // generated ethereal password
-      }, tls: {
+        user: "kontakt@clickdesign.pl", // generated ethereal user
+        pass: "!Loleq123" // generated ethereal password
+      },
+      tls: {
         rejectUnauthorized: false
       }
     });
-    let list = ['kontakt@clickdesign.pl']
-    let confirmationAdresse = [req.body.email]
+    let list = ["kontakt@clickdesign.pl"];
+    let confirmationAdresse = [req.body.email];
 
     // send mail with defined transport bject
     let info = await transporter.sendMail({
       from: req.body.mail, // sender address
       to: list, // list of receivers
-      subject: 'Hello ✔', // Subject line
-      text: 'Hello world?', // plain text body
+      subject: "Hello ✔", // Subject line
+      text: "Hello world?", // plain text body
       html: output // html body
     });
     let confirmMail = await transporter.sendMail({
       from: req.body.mail, // sender address
       to: confirmationAdresse, // list of receivers
-      subject: 'Hello ✔', // Subject line
-      text: 'Hello world?', // plain text body
+      subject: "Hello ✔", // Subject line
+      text: "Hello world?", // plain text body
       html: confirmationOutput // html body
     });
-
   }
 
   main().catch(console.error);
-
-
-
-
-})
+});
 
 module.exports = router;
