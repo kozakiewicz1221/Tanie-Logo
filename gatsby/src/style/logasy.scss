@@ -1,0 +1,47 @@
+@import "_variables.scss";
+
+//CLIENTS 
+.logos-wrapper {
+
+    h2 {
+        margin-top: -1em;
+    }
+}
+
+.logos-grid {
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+}
+
+div.logo-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+img.img {
+    width: 100%;
+    margin: auto;
+
+}
+
+
+.twocols {
+    display: flex;
+    flex-direction: row;
+}
+
+.col {
+    width: 50%;
+}
+
+
+@media only screen and (max-width: 700px) {
+
+    .logos-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

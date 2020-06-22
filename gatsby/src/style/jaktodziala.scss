@@ -1,0 +1,93 @@
+@import "_variables.scss";
+
+.jaktodziala-wrapper {
+    padding: 4% 0;
+    position: relative;
+    background: url('../images/stripes.png') no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.jaktodziala-inner {
+    display: grid;
+    grid-gap: 25px;
+    grid-template-columns: 1fr 1fr;
+
+
+
+    & div {
+        padding: 20px;
+
+        z-index: 9;
+
+
+    }
+}
+
+.ptag {
+    font-size: 20px;
+    color: $color1;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: 1.7;
+}
+
+@media only screen and (max-width: 950px) {
+
+    .blob1 {
+        display: none;
+    }
+
+    .jaktodziala-wrapper {
+        padding: 5% 0;
+        position: relative;
+        background: url('../images/stripes.png')
+    }
+
+    .jaktodziala-inner {
+        display: grid;
+        grid-gap: 25px;
+        grid-template-columns: 1fr;
+
+        & div {
+            padding: 20px;
+            @include radius;
+            @include shadow;
+            z-index: 9;
+            background: white;
+
+
+
+        }
+    }
+
+}
+
+.blob1 {
+    position: absolute;
+    right: 0;
+    bottom: -25px;
+    width: 250px;
+    z-index: 8 !important;
+}
+
+
+.blob2 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 250px;
+    z-index: 8 !important;
+
+}
+
+@media only screen and (max-width: 1150px) {
+
+    .blob1,
+    .blob2 {
+        width: 200px
+    }
+}
