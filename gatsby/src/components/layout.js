@@ -1,52 +1,40 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-
-import React from "react"
-import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
-
-import Header from "./header"
+import React, { useEffect } from "react"
 import "./layout.css"
+import { useStaticQuery, graphql } from "gatsby"
+import Header from "./header"
+import MyFooter from "./footer"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const reviews = [
+        "Bardzo szybka realizacja i profesjonalna obsługa klienta",
+        "Porządna firma, zleciłem im już kilka projektów. Zawsze zadowolony",
+        "Bardzo ładne logo dostałam. Wielkie dzięki",
+        "Good job!",
+        "W takiej cenie nie spodziewalem się dobrej jakości, ale się myliłem. Nieźle",
+      ]
+      const random = Math.floor(Math.random() * reviews.length)
+      toast(<p className="p-2">{reviews[random]}</p>)
+    }, 8000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 1120,
-          padding: "2em",
+      <div>
+        <Header />
 
-        }}
-      >
         <main>{children}</main>
         <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          <MyFooter />
         </footer>
       </div>
+      <ToastContainer position="bottom-left" closeOnClick pauseOnHover />
     </>
   )
-}
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 }
 
 export default Layout

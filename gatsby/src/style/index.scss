@@ -1,0 +1,47 @@
+@import "_variables.scss";
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+h1,
+h2,
+h3 {
+}
+h1 {
+}
+
+p {
+  font-weight: 500 !important;
+}
+
+.navbar {
+  z-index: 9999 !important;
+  position: sticky;
+  top: 0;
+}
+.gradient-nav-link {
+  background: $color1;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gradient-nav-link:hover {
+  background: black;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-gradient {
+  background: $color1;
+}
+
+.mytitle::before {
+  content: "";
+  width: 200px;
+  height: 90px;
+  margin-top: -17px;
+  margin-left: 25px;
+  background: #f7fafc;
+  border-radius: 9px;
+  position: absolute;
+  z-index: -1;
+}

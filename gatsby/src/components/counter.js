@@ -1,67 +1,46 @@
-import React, { useState } from "react"
-import "../style/counter.scss"
-import blob1 from '../images/blob1.png'
-import blob2 from '../images/blob2.png'
+import React from "react"
+
 const Counter = () => {
-
+  const data = [
+    {
+      title: "12",
+      content: "Lat doświadczenia",
+    },
+    {
+      title: "10.000+",
+      content: "Zrealizowanych projektów",
+    },
+    {
+      title: "5000+",
+      content: "Zadowolonych klientów",
+    },
+    {
+      title: "100%",
+      content: "Profesjonalnej i kompleksowej obsługi",
+    },
+  ]
   return (
-    <section className="counter-wrapper">
-      <div className="counter-inner container">
-        <div className="counter-col">
-          <h2 >Zaufaj profesjonalistom</h2>
-          <p>Budowanie solidnej podstawy biznesowej oznacza stworzenie logo, które inspiruje. Z naszą pomocą Twoje logo może zbudować wiarygodny wizerunek i stworzyć lojalność klientów. Wszystkie zaprojektowane przez nas loga mają jeden wspólny cel: zbudowanie silnej podstawy marketingowej dla Twojej firmy. Największe loga inspirują coś głębszego niż wiarygodność. Promieniują integralnością i wzbudzają zaufanie. Zaprojektujmy logo, które inspiruje razem.</p>
-          <div className="cte-wrapper">
-            <button className="btn1">Zobacz realizacje</button>
-            <button className="btn2">Zamów Logo</button>
-
-          </div>
-
-        </div>
-        <div className="counter-col">
-          <img src={require('../images/tanie-logo-ilustracja-dlaczego-warto.png')}></img>
-
-        </div>
+    <section className=" container mx-auto bg-gradient  rounded-lg  flexflex-col pb-10 pt-10 md:pt-10 p-6">
+      <div className="mytitle mb-4 md:mb-8 ml-4">
+        <h2 className="text-white text-center text-3xl md:text-4xl ">
+          Zaufaj profesjonalistom
+        </h2>
       </div>
-
-      <div className="counter-grid container">
-        <div>
-          <span className="counter-title">
-            12
-          </span>
-          <span className="counter-text">
-            lat doświadczenia
-          </span>
-        </div>
-
-        <div>
-          <span className="counter-title">
-            5000+
-          </span>
-          <span className="counter-text">
-            zrealizowanych projektów
-        </span>
-        </div>
-
-        <div>
-          <span className="counter-title">
-            70%
-          </span>
-          <span className="counter-text">
-            powracających klientów          </span>
-        </div>
-
-        <div>
-          <span className="counter-title">
-            100%
-          </span>
-          <span className="counter-text">
-            zadowolenia          </span>
-        </div>
-
+      <div className="flex flex-row flex-wrap  items-center justify-center ">
+        {data.map(item => {
+          return (
+            <div className="mt-4 md:mt-0 sm:w-full md:w-1/2 lg:w-1/4 p-1 md:p-4 ">
+              <div className=" flex flex-col text-center items-center justify-center  bg-gray-100 rounded-lg px-4 py-6 shadow-xl">
+                <h3 className="text-base font-black text-4xl gradient-text">
+                  {item.title}
+                </h3>
+                <p>{item.content}</p>
+              </div>
+            </div>
+          )
+        })}
       </div>
-
     </section>
-
   )
 }
 

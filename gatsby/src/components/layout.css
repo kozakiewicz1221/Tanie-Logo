@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -7,7 +11,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: visby CF
+  font-family: "Montserrat", sans-serif;
 }
 
 article,
@@ -175,7 +179,6 @@ button:-moz-focusring {
 
 fieldset {
   border: none;
-
 }
 
 legend {
@@ -241,7 +244,6 @@ html {
 }
 
 body {
-  color: hsla(0, 0%, 0%, 0.8);
   font-weight: normal;
   word-wrap: break-word;
   font-kerning: normal;
@@ -272,7 +274,6 @@ h1 {
   padding-right: 0;
   padding-top: 0;
   margin-bottom: 1.45rem;
-  color: inherit;
 
   font-weight: bold;
   text-rendering: optimizeLegibility;
@@ -431,7 +432,6 @@ p {
   padding-left: 0;
   padding-right: 0;
   padding-top: 0;
-
 }
 
 figure {
@@ -568,7 +568,8 @@ th {
   font-weight: bold;
 }
 
-li {}
+li {
+}
 
 ol li {
   padding-left: 0;
@@ -578,13 +579,14 @@ ul li {
   padding-left: 0;
 }
 
-li>ol {
+li > ol {
   margin-left: 1.45rem;
   margin-bottom: calc(1.45rem / 2);
   margin-top: calc(1.45rem / 2);
 }
 
-li>ul {}
+li > ul {
+}
 
 blockquote *:last-child {
   margin-bottom: 0;
@@ -598,7 +600,7 @@ p *:last-child {
   margin-bottom: 0;
 }
 
-li>p {
+li > p {
   margin-bottom: calc(1.45rem / 2);
 }
 

@@ -1,12 +1,20 @@
 const nodemailer = require("nodemailer");
-const mysql = require("mysql");
 const moment = require("moment");
+const db = require("../db");
 const SQL = require("sql-template-strings");
+const mysql = require("mysql");
 
 exports.neworder = async (req, res) => {
-  console.log(req.body.fvat);
+  console.log(req.body);
+
+  let arr = [];
+  let dodatkowe = await req.body.dodatkowe.map((x) => {
+    arr.push(x.name);
+  });
+  arr = arr.join(", ");
+  console.log(arr);
   // DB CONFIG
-  var db = await mysql.createConnection({
+  var db = mysql.createConnection({
     host: "77.72.0.150",
     user: "backend_app",
     password: "!LoLeQ3@1",
@@ -15,14 +23,6 @@ exports.neworder = async (req, res) => {
   db.connect((err) => {
     if (err) throw err;
   });
-
-  let arr = [];
-  let dodatkowe = await req.body.dodatkowe.map((x) => {
-    arr.push(x.name);
-  });
-  arr = arr.join(", ");
-  console.log(arr);
-
   // DB QUERY
   db.query(
     SQL`INSERT INTO orders VALUES(
@@ -37,7 +37,8 @@ exports.neworder = async (req, res) => {
     ${req.body.description},
     ${req.body.payment},
     ${req.body.fvat},
-    "file", "${moment().format()}" )`,
+    "file", 
+    "${moment().format()}" )`,
     (err, result) => {
       if (err) throw err;
       console.log(result);
@@ -102,6 +103,7 @@ exports.neworder = async (req, res) => {
   // }
 
   // main().catch(console.error);
+  res.send("https://google.pl");
 };
 
 exports.deleteorders = (req, res) => {
@@ -117,5 +119,6 @@ exports.deleteorders = (req, res) => {
   let sql = `DELETE FROM orders`;
   db.query(sql, (err, result) => {
     console.log("---Deleted all orders----");
+    res.send("deleted");
   });
 };

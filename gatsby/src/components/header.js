@@ -1,58 +1,56 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
-import React, { useEffect } from "react"
+import React from "react"
 import "../style/header.scss"
-import logo from "../images/logo.png"
-import logo2 from "../images/logo2.png"
-import logo3 from "../images/logo3.png"
-
+import logo from "../images/tanielogo-logo.svg"
+import { motion } from "framer-motion"
 
 const Header = ({ siteTitle }) => {
-
-  useEffect(() => {
-    window.onscroll = function () { scrollFunction() };
-
-    function scrollFunction() {
-      if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-        document.querySelector(".header-wrapper").classList.add("sticky-navbar")
-        document.querySelector(".logos").src = logo3
-        document.querySelector(".logos").classList.add("logos-sticky")
-
-      } else {
-        document.querySelector(".header-wrapper").classList.remove("sticky-navbar")
-        document.querySelector(".logos").classList.remove("logos-sticky")
-        document.querySelector(".logos").src = logo
-
-      }
-    }
-
-  }, [])
-
-
-
-
+  const navLinks = [
+    { title: "Home", link: "/" },
+    { title: "Cennik", link: "/cennik" },
+    { title: "Realizacje", link: "/realizacje" },
+    { title: "Kontakt", link: "/kontakt" },
+  ]
   return (
-    <header>
-      <div className="header-wrapper">
-        <div className="logo-wrapper">
-          <img src={logo} className="logos"></img>
+    <header className="navbar shadow-md">
+      <div className=" flex flex-row justify-between items-center bg-gray-100 px-4 py-2 ">
+        <div className="h-full flex items-center justify-center">
+          <img src={logo} style={{ width: "100px", margin: "0 auto" }}></img>
         </div>
-        <div className="nav-wrapper">
-          <ul>
-            <li><Link to="/">Cennik</Link></li>
-            <li><Link to="/">Jak działamy</Link></li>
-            <li><Link to="/">Realizacje</Link></li>
-            <li><Link to="/">Kontakt</Link></li>
-            <li className="cta"><Link to="/zamowienie">Zamów Logo</Link></li>
-
-
+        <div className="hidden sm:flex">
+          <ul className="flex flex-row">
+            {navLinks.map(item => {
+              return (
+                <li key={item.title}>
+                  <Link
+                    to={item.link}
+                    className="m-2 font-semibold gradient-nav-link text-sm "
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         </div>
+        <motion.div
+          whileHover={{
+            scale: 1.1,
+          }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <Link
+            to="/zamowienie"
+            className="bg-gradient py-2 px-3 rounded-full text-white font-black hover:text-black text-md"
+          >
+            Zamów Logo
+          </Link>
+        </motion.div>
       </div>
     </header>
   )
 }
-
 
 Header.propTypes = {
   siteTitle: PropTypes.string,

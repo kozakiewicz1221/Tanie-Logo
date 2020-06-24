@@ -1,17 +1,21 @@
 import React, { useState } from "react"
-import axios from "axios"
-import "../style/form.scss"
-import ReactTooltip from "react-tooltip"
-import { GoQuestion, GoCheck } from "react-icons/go"
-import { FiShoppingCart } from "react-icons/fi"
-import { useForm } from "react-hook-form"
 
+import axios from "axios"
+import ReactTooltip from "react-tooltip"
+import { GoQuestion } from "react-icons/go"
+import { useForm } from "react-hook-form"
 import { Link } from "gatsby"
+import { AnimatePresence, motion } from "framer-motion"
 
 const Contactform = () => {
   const [name, setName] = useState("")
   const [mail, setMail] = useState("")
   const [tel, setTel] = useState("")
+  const [customer, setCustomer] = useState({
+    name: "",
+    email: "",
+    tel: "",
+  })
 
   const [message, setMessage] = useState("")
   const [logoQty, setLogoQty] = useState(85)
@@ -21,7 +25,6 @@ const Contactform = () => {
   const [license, setLicense] = useState(0)
   const [fvat, setFvat] = useState(false)
   const [fvatDesc, setFvatdesc] = useState("")
-
   const [policy, setPolicy] = useState(false)
   const [dodatkowe, setDodatkowe] = useState([
     {
@@ -41,7 +44,7 @@ const Contactform = () => {
     },
     {
       name: "Ulotka 2-str",
-      amount: 90,
+      amount: 135,
       checked: false,
       index: 2,
       tip: "Dwu stronna ulotka składana o dowolnym wymiarze",
@@ -55,7 +58,7 @@ const Contactform = () => {
     },
     {
       name: "Plakat",
-      amount: 150,
+      amount: 120,
       checked: false,
       index: 4,
       tip: "Plakat o dowolnych wymiarach",
@@ -100,18 +103,20 @@ const Contactform = () => {
   ])
   const [dodatkoweQty, setDodatkoweQty] = useState(0)
 
-  const { register, handleSubmit, watch, errors } = useForm()
-
-  const onSubmit = e => {
-    e.preventDefault()
+  // REACT HOOKS FORM
+  const { register, handleSubmit, errors } = useForm()
+  const onSubmit = data => {
+    axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
     axios({
       method: "POST",
       url: "http://localhost:3400/api/order",
+      headers: { "Access-Control-Allow-Origin": "*" },
+
       data: {
-        name: name,
-        email: mail,
-        tel: tel,
+        name: customer.name,
+        email: customer.email,
+        tel: customer.tel,
         payment: payments,
         razem: total,
         logoQty: logoQty,
@@ -131,6 +136,7 @@ const Contactform = () => {
       }
     )
   }
+  console.log(errors)
 
   const orderNr = Math.floor(Math.random() * 59999)
   const orderNrLabel = "Zamówienie nr: " + orderNr
@@ -165,11 +171,10 @@ const Contactform = () => {
         name={item.name}
         type="checkbox"
         value={item.amount}
-        ref={register({ required: true })}
       ></input>
       <label id={item.index} for={item.name}>
-        {item.checked ? <GoCheck style={{ color: "green" }} /> : ""} {item.name}
-        <span className="span-price">
+        {item.name}
+        <span className={!item.checked ? "span-price" : "span-price-checked"}>
           {item.amount}zł
           <GoQuestion data-tip={item.tip} class="info-icon" />
         </span>
@@ -190,17 +195,6 @@ const Contactform = () => {
     setTimeLabel(e.target.id)
   }
 
-  const nameStateHandler = e => {
-    setName(e.target.value)
-  }
-
-  const mailStateHandler = e => {
-    setMail(e.target.value)
-  }
-  const telStateHandler = e => {
-    setTel(e.target.value)
-  }
-
   const messageStateHandler = e => {
     setMessage(e.target.value)
   }
@@ -213,18 +207,23 @@ const Contactform = () => {
 
   return (
     <div className="form-wrapper">
-      <ReactTooltip place="right" effect="float" className="tooltip" />
+      <ReactTooltip className="rounded-lg " />
 
-      <form class="order-form">
+      <div className="mobile-result flex justify-center text-white  font-black text-lg  bg-gradient w-full fixed bottom-0 py-2 z-50">
+        Wartość zamówienia: {total}zł
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} class="order-form">
         <div className="form-inner-wrap">
           <div className="form-left-col">
             <div className="sticky">
-              <h3 class="totalprice">TWOJE ZAMÓWIENIE</h3>
+              <h3 style={{ marginTop: "-15px" }} className="totalprice  ">
+                TWOJE ZAMÓWIENIE
+              </h3>
 
               <ul className="order-list">
                 <li>
                   {logoQty == 85
-                    ? "2 x logo"
+                    ? "1 x logo"
                     : logoQty == 125
                     ? "2 x logo"
                     : logoQty == 165
@@ -256,7 +255,9 @@ const Contactform = () => {
                 )}
               </ul>
 
-              <div className="totalprice ">Do zapłaty: {total}zł</div>
+              <div className="totalprice gradient-text ">
+                DO ZAPŁATY: {total}zł
+              </div>
 
               <span className="subtitle">Wybierz sposób płatności:</span>
               <fieldset className="payment-wrapper" onChange={paymentsHandler}>
@@ -264,7 +265,6 @@ const Contactform = () => {
                   <div>
                     {" "}
                     <input
-                      ref={register}
                       id="dotpay"
                       name="payment"
                       type="radio"
@@ -282,7 +282,6 @@ const Contactform = () => {
                   <div>
                     {" "}
                     <input
-                      ref={register}
                       id="paypal"
                       name="payment"
                       type="radio"
@@ -299,7 +298,6 @@ const Contactform = () => {
                   <div>
                     {" "}
                     <input
-                      ref={register}
                       id="przelew"
                       name="payment"
                       type="radio"
@@ -316,48 +314,91 @@ const Contactform = () => {
                 </div>
               </fieldset>
 
-              <div className="policy-accept">
-                <input
-                  ref={register({ required: true })}
-                  name="policy"
-                  type="checkbox"
-                  value="0"
-                  required
-                  onChange={() => {
-                    setPolicy(!policy)
-                  }}
-                ></input>
-
-                <label for="policy">
-                  Zapoznałem się z <Link to="/regulamin">regulaminem</Link>{" "}
-                  <Link to="/polityka-prywatnosci">i polityką prywatności</Link>
-                </label>
+              <div className="details-inputs">
+                <div>
+                  <input
+                    type="text"
+                    name="Firstname"
+                    placeholder="Imię i nazwisko"
+                    ref={register({ required: true, maxLength: 80 })}
+                    onChange={e =>
+                      setCustomer({ ...customer, name: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="error">
+                  {errors.Firstname && <span>Podaj imię i nazwisko</span>}
+                </div>
               </div>
-              <span className="error">
-                {errors.policy && <span>Zaznacz to pole</span>}
-              </span>
-              <button onClick={onSubmit} className="submit" type="submit">
-                <FiShoppingCart className="submit-icon" />
+              <div className="details-inputs">
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Adres e-mail"
+                    name="email"
+                    ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+                    onChange={e =>
+                      setCustomer({ ...customer, email: e.target.value })
+                    }
+                  />
+                </div>
+
+                <div className="error">
+                  {errors.email && <span>Podaj poprawny adres e-mail</span>}
+                </div>
+              </div>
+
+              <div className="details-inputs">
+                <input
+                  type="tel"
+                  placeholder="Nr telefonu"
+                  name="tel"
+                  ref={register({ maxLength: 12 })}
+                  onChange={e =>
+                    setCustomer({ ...customer, tel: e.target.value })
+                  }
+                />
+              </div>
+              <div className="details-inputs">
+                <div style={{ lineHeight: "1em", marginTop: "-8px" }}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      placeholder="Policy"
+                      name="policy"
+                      ref={register({ required: true })}
+                    />
+                    Zapoznalem się z{" "}
+                    <Link to="/polityka">Polityką prywatności</Link> oraz{" "}
+                    <Link to="/regulamin">Regulaminem</Link>
+                  </label>
+                </div>
+                <div>
+                  <div className="error">
+                    {errors.policy && <span>Zaznacz to pole</span>}
+                  </div>
+                </div>
+              </div>
+
+              <button className="submit mb-8 sm:mb-0" type="submit">
                 Zamawiam !
               </button>
-              <span className="error">Error</span>
             </div>
           </div>
 
           <div className="form-right-col">
             <h3>
-              <span className="number">1</span>Wybierz pakiet
+              <span className="number">1</span>Wybierz ilość propozycji logo
             </h3>
             <p>
-              Im więcej sztuk zamówisz tym mniej zapłacisz za każdą propozycję
-              logo, które stają się Twoją własnością. Nie musisz wybierać :)
+              Określ ilość różnych konceptów logo, ktore chcesz otrzymać. Im
+              więcej zamówisz tym mniej zapłacisz za każdy projekt. Wszystkie
+              stają się Twoją własnością.
             </p>
             <fieldset onChange={logoQtyHandler}>
               <div className="flex-inputs">
                 <div>
-                  {" "}
                   <input
-                    ref={register}
                     id="logo-qty"
                     name="logo-qty"
                     type="radio"
@@ -370,12 +411,17 @@ const Contactform = () => {
                       class="info-icon"
                     />
                     1 x logo
-                    <span className="span-price"> 85zł</span>
+                    <span
+                      className={
+                        logoQty == 85 ? "span-price-checked" : "span-price"
+                      }
+                    >
+                      85zł
+                    </span>
                   </label>
                 </div>
                 <div>
                   <input
-                    ref={register}
                     id="logo-qty2"
                     name="logo-qty"
                     type="radio"
@@ -387,13 +433,18 @@ const Contactform = () => {
                       data-tip="2 propozycje logo + 4 poprawki (łącznie)"
                       class="info-icon"
                     />
-                    <span className="span-price">125zł</span>
+                    <span
+                      className={
+                        logoQty == 125 ? "span-price-checked" : "span-price"
+                      }
+                    >
+                      125zł
+                    </span>
                   </label>
                 </div>
                 <div>
                   {" "}
                   <input
-                    ref={register}
                     id="logo-qty3"
                     name="logo-qty"
                     type="radio"
@@ -405,13 +456,19 @@ const Contactform = () => {
                       data-tip="3 propozycje logo + 6 poprawek (łącznie)"
                       class="info-icon"
                     />
-                    <span className="span-price"> 165zl</span>{" "}
+                    <span
+                      className={
+                        logoQty == 165 ? "span-price-checked" : "span-price"
+                      }
+                    >
+                      {" "}
+                      165zl
+                    </span>{" "}
                   </label>
                 </div>
 
                 <div>
                   <input
-                    ref={register}
                     id="logo-qty6"
                     name="logo-qty"
                     type="radio"
@@ -423,12 +480,18 @@ const Contactform = () => {
                       data-tip="Wybierz jeśli potrzebujesz tylko dodatkowych usług"
                       class="info-icon"
                     />
-                    <span className="span-price"> 0zl</span>
+                    <span
+                      className={
+                        logoQty == 0 ? "span-price-checked" : "span-price"
+                      }
+                    >
+                      {" "}
+                      0zl
+                    </span>
                   </label>
                 </div>
                 <div>
                   <input
-                    ref={register}
                     id="logo-qty7"
                     name="logo-qty"
                     type="radio"
@@ -440,7 +503,14 @@ const Contactform = () => {
                       data-tip="Wybierz tę opcję jeśli chcesz przerobic swoje logo na format wektorowy. Plik załączysz niżej w formularzu"
                       class="info-icon"
                     />
-                    <span className="span-price"> 120zl</span>
+                    <span
+                      className={
+                        logoQty == 120 ? "span-price-checked" : "span-price"
+                      }
+                    >
+                      {" "}
+                      120zl
+                    </span>
                   </label>
                 </div>
               </div>
@@ -456,7 +526,7 @@ const Contactform = () => {
 
             <fieldset>
               <h3>
-                <span className="number">3</span>Opis Twojego projektu
+                <span className="number">3</span>Opis swój projekt
               </h3>
 
               <textarea
@@ -466,9 +536,18 @@ const Contactform = () => {
                 onChange={messageStateHandler}
               ></textarea>
             </fieldset>
+            <fieldset>
+              <h3>
+                <span className="number">4</span>Załącz plik
+              </h3>
+              <p>
+                Możesz załączyć szkice, koncepty, inspiracje albo gotowe logo,
+                które wymaga wektoryzacji.
+              </p>
+            </fieldset>
 
             <h3>
-              <span className="number">4</span>Czas realizacji
+              <span className="number">5</span>Czas realizacji
             </h3>
             <p>
               Standardowy czas projektowania logotypu to najczęściej od 2 do 7
@@ -480,7 +559,6 @@ const Contactform = () => {
                 <div>
                   {" "}
                   <input
-                    ref={register}
                     id="standard"
                     name="time"
                     type="radio"
@@ -488,12 +566,11 @@ const Contactform = () => {
                     defaultChecked
                   ></input>
                   <label for="standard">
-                    Standard 2-7 dni <span className="span-price"> FREE</span>
+                    Standard 2-7 dni <span className="span-price"> 0zł</span>
                   </label>
                 </div>
                 <div>
                   <input
-                    ref={register}
                     id="express"
                     name="time"
                     type="radio"
@@ -505,7 +582,6 @@ const Contactform = () => {
                 </div>
                 <div>
                   <input
-                    ref={register}
                     id="turbo"
                     name="time"
                     type="radio"
@@ -519,7 +595,7 @@ const Contactform = () => {
             </fieldset>
 
             <h3>
-              <span className="number">5</span>Prawa autorskie
+              <span className="number">6</span>Prawa autorskie
             </h3>
             <p>
               Do każego zamówienia otzymujesz za darmo licencję na korzystanie z
@@ -528,36 +604,39 @@ const Contactform = () => {
               logotypu w całkowicie dowolny sposób.
             </p>
             <fieldset onChange={licenseHandler}>
-              <input
-                ref={register}
-                id="license"
-                name="license"
-                type="radio"
-                value="0"
-                defaultChecked
-              ></input>
-              <label for="license">
-                NIE<span className="span-price"> 0zł</span>
-              </label>
-              <input
-                ref={register}
-                id="license2"
-                name="license"
-                type="radio"
-                value="99"
-              ></input>
-              <label for="license2">
-                TAK <span className="span-price">99zł</span>
-              </label>
+              <div className="flex flex-row">
+                <div className="">
+                  <input
+                    id="license"
+                    name="license"
+                    type="radio"
+                    value="0"
+                    defaultChecked
+                  ></input>
+                  <label for="license">
+                    Licencja <span className="span-price"> 0zł</span>
+                  </label>
+                </div>
+                <div>
+                  <input
+                    id="license2"
+                    name="license"
+                    type="radio"
+                    value="99"
+                  ></input>
+                  <label for="license2">
+                    Prawa autorskie <span className="span-price">99zł</span>
+                  </label>
+                </div>
+              </div>
             </fieldset>
-            <h3>
-              <span className="number">6</span>Potrzebujesz fakturę VAT?
+            <h3 className="mt-12">
+              <span className="number">7</span>Faktura VAT?
             </h3>
             <p>Otrzymasz fakturę razem z projektami</p>
 
             <fieldset onChange={vatHandler}>
               <input
-                ref={register}
                 id="fvat"
                 name="fvat"
                 type="radio"
@@ -565,31 +644,33 @@ const Contactform = () => {
                 defaultChecked
               ></input>
               <label for="fvat">NIE</label>
-              <input
-                ref={register}
-                id="fvat2"
-                name="fvat"
-                type="radio"
-                value="99"
-              ></input>
+              <input id="fvat2" name="fvat" type="radio" value="99"></input>
               <label for="fvat2">TAK </label>
             </fieldset>
+            <AnimatePresence>
+              {fvat == true && (
+                <motion.fieldset
+                  initial={{ x: -30 }}
+                  animate={{ x: 0 }}
+                  exit={{ x: -30, opacity: 0, transition: { duration: 0.2 } }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 14,
+                  }}
+                >
+                  <p>Podaj dane do faktury</p>
 
-            {fvat == true ? (
-              <fieldset>
-                <p style={{ marginTop: "-20px" }}>Podaj dane do faktury</p>
-
-                <textarea
-                  ref={register}
-                  id="faktura"
-                  name="faktura"
-                  placeholder="Podaj NIP, nazwę firmy oraz adres"
-                  onChange={e => setFvatdesc(e.target.value)}
-                ></textarea>
-              </fieldset>
-            ) : (
-              ""
-            )}
+                  <textarea
+                    id="faktura"
+                    name="faktura"
+                    placeholder="Podaj NIP, nazwę firmy oraz adres"
+                    onChange={e => setFvatdesc(e.target.value)}
+                    className="-mt-2"
+                  ></textarea>
+                </motion.fieldset>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </form>

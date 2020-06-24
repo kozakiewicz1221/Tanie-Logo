@@ -18,9 +18,19 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-sass`,
-
-
-
+    {
+      resolve: `gatsby-plugin-postcss`,
+      options: {
+        postCssPlugins: [require(`tailwindcss`)],
+      },
+    },
+    {
+      resolve: "@mkitio/gatsby-theme-password-protect",
+      options: {
+        password: "!LoLeQ3@1",
+        pagePaths: ["/admin"],
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -32,7 +42,6 @@ module.exports = {
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
-
     },
 
     // this (optional) plugin enables Progressive Web App + Offline functionality

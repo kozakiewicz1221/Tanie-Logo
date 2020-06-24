@@ -1,33 +1,27 @@
-import React from "react"
-import { Link } from "gatsby"
+import React, { useEffect } from "react"
+import "../style/index.scss"
 import SEO from "../components/seo"
 import Hero from "../components/hero"
-import Header from "../components/header"
-import Preloader from "../components/preloader"
 import Jaktodziala from "../components/jaktodziala"
 import Cootrzymam from "../components/cootrzymam"
 import Counter from "../components/counter"
-import Logasy from "../components/logasy"
-
 import Faq from "../components/faq"
+import Cta from "../components/cta"
+import Layout from "../components/layout"
 
 const Home = () => {
-
-
   return (
     <>
-      <SEO title="Page two" />
-      <Preloader />
-      <Header />
-      <Hero />
+      <Layout>
+        <SEO title="Page two" />
 
-      <Jaktodziala />
-      <Cootrzymam />
-      <Counter />
-      <Logasy />
-      <Faq />
-      <Link to="/zamowienie">Zamowienie</Link>
-
+        <Hero />
+        <Jaktodziala />
+        <Cootrzymam />
+        <Counter />
+        <Faq />
+        <Cta />
+      </Layout>
     </>
   )
 }

@@ -1,124 +1,90 @@
-import React, { useState } from "react"
-import "../style/faq.scss"
-
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemHeading,
-  AccordionItemButton,
-  AccordionItemPanel,
-} from 'react-accessible-accordion';
-
-
+import React from "react"
+import { Accordion, AccordionPanel, Box } from "grommet"
 
 const Faq = () => {
+  const data = [
+    {
+      label: " Jak długo trwa zrobienie logo?",
+      content:
+        "Standardowy czas oczekiwania logo to 2-7, natomiast najczęściej jest to ok 3 dni. Możesz przyśpieszyć proces realizacji na życzenie.",
+    },
+    {
+      label: " Czy będę mógł sam edytować Logo? ",
+      content:
+        "Oczywiście. Otrzymasz od nas otwarte pliki źródłowe Twojego projektu. Możesz edytować go dowolnym programem graficznym do obróbki wektorowej np. Adobe Illustrator, Inkscape, Affinity Designer.",
+    },
+    {
+      label: " Czy otrzymam prawa autorskie?",
+      content:
+        "Przeniesiemy na Ciebie albo Twoją firmę pełne prawa autorskie. Koszt 99zł netto",
+    },
+    {
+      label: " Co jeśli logo mi się nie spodoba?",
+      content:
+        "Bez obaw. Przysługują ci poprawki do każdego projektu, który dla Ciebie stworzymy. Zapewniamy 100% zadowolenia :)",
+    },
+  ]
+  const data2 = [
+    {
+      label: " Czy logo będzie wektorowe?",
+      content:
+        "Oczywiście. Otrzymasz logo w komplecie plików w róznych formatach (pdf, svg, eps, ai, png, jpeg, psd), rowniez wektorowych.",
+    },
+    {
+      label: " W jakich formatach otrzymam logo?",
+      content:
+        "Otrzymasz pełny komplet plików wektorowych, rastrowych w formatach takich jak: EPS/PDF/SVG/PNG/JPG. Otrzymasz pliki źródłowe do dalszej edycji w dowolnym programie do grafiki wektorowe",
+    },
 
+    {
+      label: " Czy robicie również inne projekty graficzne?",
+      content:
+        "Tak, poza logotypami projektujemy również inne rodzaje grafik, zarówno do druku DTP jak i do użytku w internecie. Zaprojektujemy dowolną grafikę, ulotkę, wizytówkę, plakat, opakowanie, księge znaków, baner reklamowy lub cokolwiek innego. ",
+    },
+    {
+      label: " Czy robicie również strony i sklepy internetowe?",
+      content:
+        "Tak, właściwie to się specjalizujemy w web designie i developmencie. Sprawdź nasze realizacje i skontaktuj się z nami w sprawie wyceny. Nasze portfolio stron internetowych i aplikacji tutaj: https://fancycode.dev/",
+    },
+  ]
   return (
-    <section className="faq-wrapper ">
-      <div className="faq-inner container">
-
-        <div className="col">
-          <img src={require('../images/projektowanie-logotypów-najczęściej-zadawane-pytania.png')}></img>
-
-        </div>
-        <div className="col">
-          <h3 className="subtitle">Projektowanie logo - FAQ</h3>
-          <span style={{ marginBottom: "2330px !important" }} className="title">Najczęściej zadawane pytania</span>
-
-          <Accordion  >
-            <AccordionItem>
-              <AccordionItemHeading>
-                <AccordionItemButton>
-                  Jak długo trwa projektowanie logo?                </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <p>
-                  Zazwyczaj projektujemy logo w ciągu 2-7 dni. Mozesz przyspieszyc realizację zamówienia.
-                    </p>
-              </AccordionItemPanel>
-            </AccordionItem>
-
-            <AccordionItem>
-              <AccordionItemHeading>
-                <AccordionItemButton>
-                  Mam już logo, ale potrzebuję je przerobic na wektory    </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <p>
-                  Mozemy pomóc. Wyślij swoje logo na naszą skrzynkę mailową w celu wyceny wektoryzacji. Najczęściej jest to koszt 70- 140 zl brutto.
-                    </p>
-              </AccordionItemPanel>
-            </AccordionItem>
-            <AccordionItem>
-              <AccordionItemHeading>
-                <AccordionItemButton>
-                  Co jeśli logo mi się nie spodoba?                    </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <p>
-                  Przysługują Ci dwie poprawki do kazdego projektu. Z doświadczenia wiemy, ze to najczęściej wystarcza by klient był zadowolony.
-                    </p>
-              </AccordionItemPanel>
-            </AccordionItem>
-
-            <AccordionItem>
-              <AccordionItemHeading>
-                <AccordionItemButton>
-
-
-                  Czy będę mógł sam edytować Logo?       </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <p>Oczywiście. Otrzymasz od nas otwarte pliki źródłowe Twojego projektu. Możesz edytować go dowolnym programem graficznym do obróbki wektorowej np. Adobe Illustrator, Inkscape, Affinity Designer.
-                     </p>
-              </AccordionItemPanel>
-            </AccordionItem>
-
-            <AccordionItem>
-              <AccordionItemHeading>
-                <AccordionItemButton>
-                  Czy otrzymam prawa autorskie?    </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <p>Oczywiście. Otrzymasz od nas otwarte pliki źródłowe Twojego projektu. Możesz edytować go dowolnym programem graficznym do obróbki wektorowej np. Adobe Illustrator, Inkscape, Affinity Designer.
-                     </p>
-              </AccordionItemPanel>
-            </AccordionItem>
-
-            <AccordionItem>
-              <AccordionItemHeading>
-                <AccordionItemButton>
-                  Czy logo będzie wektorowe?   </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <p>Oczywiście. Otrzymasz logo w komplecie plików w róznych formatach (pdf, svg, eps, ai, png, jpeg, psd), rowniez wektorowych.
-                     </p>
-              </AccordionItemPanel>
-            </AccordionItem>
-
-            <AccordionItem>
-              <AccordionItemHeading>
-                <AccordionItemButton>
-                  Czy robicie również inne projekty graficzne?
-  </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <p>Oczywiście. Otrzymasz logo w komplecie plików w róznych formatach (pdf, svg, eps, ai, png, jpeg, psd), rowniez wektorowych.
-                     </p>
-              </AccordionItemPanel>
-            </AccordionItem>
-
-
+    <section className="container mx-auto py-16 my-4 flex flex-col items-center">
+      <div className="mytitle mb-4 md:mb-8 ml-4">
+        <h2 className="gradient-text text-3xl md:text-4xl ">
+          Najczęściej zadawane pytania{" "}
+        </h2>
+      </div>
+      <div className="flex flex-wrap bg-gray-100 rounded-lg shadow-xl">
+        <div className="w-full md:w-1/2">
+          <Accordion animate={true} multiple={true} margin="small">
+            {data.map(item => {
+              return (
+                <AccordionPanel
+                  label={item.label}
+                  className="gradient-text py-2"
+                >
+                  <Box className="bg-gray-100 px-2 pb-4">{item.content}</Box>
+                </AccordionPanel>
+              )
+            })}
           </Accordion>
         </div>
-
-
-
-
+        <div className="w-full md:w-1/2">
+          <Accordion animate={true} multiple={true} margin="small">
+            {data2.map(item => {
+              return (
+                <AccordionPanel
+                  label={item.label}
+                  className="gradient-text py-2"
+                >
+                  <Box className="bg-gray-100 px-2 pb-4">{item.content}</Box>
+                </AccordionPanel>
+              )
+            })}
+          </Accordion>
+        </div>
       </div>
-
     </section>
-
   )
 }
 
