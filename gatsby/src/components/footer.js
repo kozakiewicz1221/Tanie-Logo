@@ -13,7 +13,7 @@ const Footer = () => {
     { title: "Kontakt", link: "/kontakt" },
   ]
   return (
-    <section className="container bg-gray-100  rounded-lg shadow-xl flex flex-col items-center mx-auto py-16 mb-10">
+    <section className="container bg-gray-100  rounded-lg flex flex-col items-center mx-auto py-16 mb-10">
       <img src={logo} style={{ width: "250px", margin: "0 auto" }}></img>
       <motion.a
         whileHover={{

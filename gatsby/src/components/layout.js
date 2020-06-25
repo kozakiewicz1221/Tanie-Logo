@@ -1,6 +1,5 @@
 import React, { useEffect } from "react"
 import "./layout.css"
-import { useStaticQuery, graphql } from "gatsby"
 import Header from "./header"
 import MyFooter from "./footer"
 import { ToastContainer, toast } from "react-toastify"
@@ -18,20 +17,19 @@ const Layout = ({ children }) => {
       ]
       const random = Math.floor(Math.random() * reviews.length)
       toast(<p className="p-2">{reviews[random]}</p>)
-    }, 8000)
+    }, 2000)
     return () => clearInterval(interval)
   }, [])
 
   return (
     <>
-      <div>
-        <Header />
+      <Header />
 
-        <main>{children}</main>
-        <footer>
-          <MyFooter />
-        </footer>
-      </div>
+      <main>{children}</main>
+
+      <footer>
+        <MyFooter />
+      </footer>
       <ToastContainer position="bottom-left" closeOnClick pauseOnHover />
     </>
   )

@@ -20,7 +20,7 @@ const Counter = () => {
     },
   ]
   return (
-    <section className=" container mx-auto bg-gradient  rounded-lg  flexflex-col pb-10 pt-10 md:pt-10 p-6">
+    <section className=" container mx-auto bg-gradient  rounded-lg  flexflex-col pb-10 pt-10 md:pt-10 p-6 mb-8">
       <div className="mytitle mb-4 md:mb-8 ml-4">
         <h2 className="text-white text-center text-3xl md:text-4xl ">
           Zaufaj profesjonalistom

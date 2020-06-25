@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 import axios from "axios"
 import ReactTooltip from "react-tooltip"
@@ -6,8 +6,29 @@ import { GoQuestion } from "react-icons/go"
 import { useForm } from "react-hook-form"
 import { Link } from "gatsby"
 import { AnimatePresence, motion } from "framer-motion"
+import gsap, { Power3, Expo, Back } from "gsap"
 
 const Contactform = () => {
+  const ease = Power3.easeOut
+
+  useEffect(() => {
+    gsap.to(".form-wrapper", { opacity: 1, duration: 0.1 })
+    gsap.fromTo(
+      [".form-left-col", ".form-right-col"],
+      {
+        y: 30,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        delay: 0.3,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: ease,
+      }
+    )
+  }, [])
   const [name, setName] = useState("")
   const [mail, setMail] = useState("")
   const [tel, setTel] = useState("")

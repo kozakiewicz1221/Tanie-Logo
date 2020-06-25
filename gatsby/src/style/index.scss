@@ -1,29 +1,30 @@
 @import "_variables.scss";
+
 body {
   font-family: "Montserrat", sans-serif;
 }
 
 h1,
 h2,
-h3 {
-}
-h1 {
-}
+h3 {}
+
+h1 {}
 
 p {
   font-weight: 500 !important;
 }
 
 .navbar {
-  z-index: 9999 !important;
   position: sticky;
   top: 0;
 }
+
 .gradient-nav-link {
   background: $color1;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .gradient-nav-link:hover {
   background: black;
   -webkit-background-clip: text;
@@ -44,4 +45,31 @@ p {
   border-radius: 9px;
   position: absolute;
   z-index: -1;
+}
+
+//PRELOADER
+.preloader-wrapper {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background: white;
+  z-index: 99999999;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.preloader-inner {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+
+
+}
+
+.logas {
+  opacity: 0;
 }

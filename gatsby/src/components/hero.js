@@ -43,34 +43,32 @@ const Hero = () => {
           </ul>
         </div>
         <div className="flex flex-row mt-8 mb-4 ">
-          <motion.button
-            whileHover={{
-              scale: 1.1,
-            }}
-            whileTap={{ scale: 0.9 }}
-            className="bg-black hover:bg-white px-4 py-2 rounded-full mr-4 "
-          >
-            <Link
-              className="gradient-text font-black uppercase tracking-widest text-md"
-              to="/zamowienie"
+          <Link to="zamowienie">
+            <motion.button
+              whileHover={{
+                scale: 1.1,
+              }}
+              whileTap={{ scale: 0.9 }}
+              className="bg-black hover:bg-white px-6 py-3 rounded-full mr-4 "
             >
-              Zamów Logo
-            </Link>
-          </motion.button>
-          <motion.button
-            whileHover={{
-              scale: 1.1,
-            }}
-            whileTap={{ scale: 0.9 }}
-            className="hover:text-black"
-          >
-            <Link
-              className="text-sm  tracking-wider hover:text-black"
-              to="/zamowienie"
+              <span className="gradient-text font-black uppercase tracking-widest text-lg">
+                Zamów Logo
+              </span>
+            </motion.button>
+          </Link>
+          <Link to="/zamowienie">
+            <motion.button
+              whileHover={{
+                scale: 1.1,
+              }}
+              whileTap={{ scale: 0.9 }}
+              className="hover:text-white text-black mt-3"
             >
-              Zobacz cennik
-            </Link>
-          </motion.button>
+              <span className="text-sm uppercase tracking-widest font-bold hover:text-white">
+                Zobacz cennik
+              </span>
+            </motion.button>
+          </Link>
         </div>
       </div>
       <div className="w-full lg:w-1/2 p-8">

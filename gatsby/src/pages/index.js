@@ -8,13 +8,14 @@ import Counter from "../components/counter"
 import Faq from "../components/faq"
 import Cta from "../components/cta"
 import Layout from "../components/layout"
+import Preloader from "../components/preloader"
 
 const Home = () => {
   return (
     <>
       <Layout>
         <SEO title="Page two" />
-
+        <Preloader />
         <Hero />
         <Jaktodziala />
         <Cootrzymam />

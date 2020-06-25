@@ -42,7 +42,7 @@ const Cootrzymam = () => {
         {data.map(item => {
           return (
             <div className="mt-6 md:mt-0 sm:w-full md:w-1/2 lg:w-1/3 p-1 md:p-4 h-auto flex flex-col  flex-auto ">
-              <div className="  bg-gray-100 rounded-lg p-4 shadow-xl flex flex-col flex-auto">
+              <div className="  shadow bg-gray-100 rounded-lg p-4  flex flex-col flex-auto">
                 <h3 className="text-base gradient-text">{item.title}</h3>
                 <p>{item.content}</p>
               </div>

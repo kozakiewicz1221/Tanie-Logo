@@ -1,5 +1,9 @@
 @import "_variables.scss";
 
+.form-wrapper {
+  opacity: 0
+}
+
 h3 {
   color: $color1;
   margin-bottom: 15px;
@@ -23,6 +27,7 @@ h4 {
   position: sticky;
   top: 85px;
 }
+
 .form-right-col p {
   margin-bottom: 20px !important;
   font-size: 13px !important;
@@ -116,6 +121,7 @@ h4 {
   margin-left: 5px;
   padding-right: 10px;
 }
+
 .span-price-checked {
   color: white;
   font-weight: 700;
@@ -154,8 +160,7 @@ h4 {
   margin-bottom: 14px;
 }
 
-.policy-accept {
-}
+.policy-accept {}
 
 .policy-accept label {
   margin-left: 8px;
@@ -349,10 +354,10 @@ button.submit {
   margin-bottom: 25px;
 }
 
-.form-right-col input[type="checkbox"]:checked + label,
-.form-right-col input[type="radio"]:checked + label,
-.payment-wrapper input[type="radio"]:checked + label,
-.payment-wrapper input[type="checkbox"]:checked + label {
+.form-right-col input[type="checkbox"]:checked+label,
+.form-right-col input[type="radio"]:checked+label,
+.payment-wrapper input[type="radio"]:checked+label,
+.payment-wrapper input[type="checkbox"]:checked+label {
   background: $color1;
   color: white;
   transition: 0.2s all;
@@ -391,6 +396,7 @@ textarea {
 .details-inputs {
   margin-bottom: 0.7em;
   margin-top: 1em;
+
   & a {
     text-decoration: none;
     color: $color2;
@@ -409,6 +415,7 @@ textarea {
   box-shadow: 0px 5px 20px -10px rgba(0, 0, 0, 0.1);
   font-size: 14px;
 }
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -427,6 +434,7 @@ input:-webkit-autofill:active {
     background: rgba(0, 0, 0, 0.05);
   }
 }
+
 .details-inputs input[type="checkbox"] {
   margin-right: 6px;
 }
@@ -436,5 +444,5 @@ input:-webkit-autofill:active {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-fieldset {
-}
+
+fieldset {}

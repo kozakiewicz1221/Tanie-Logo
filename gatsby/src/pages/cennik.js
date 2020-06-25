@@ -1,5 +1,7 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Link } from "gatsby"
+import "../style/cennik.scss"
+
 import SEO from "../components/seo"
 
 import Counter from "../components/counter"
@@ -8,8 +10,43 @@ import Cta from "../components/cta"
 import { motion } from "framer-motion"
 import Layout from "../components/layout"
 import "../style/index.scss"
+import gsap, { Power3 } from "gsap"
 
 const Cennik = () => {
+  const ease = Power3.easeOut
+  useEffect(() => {
+    gsap.fromTo(
+      [" .cennik-title ", ".dodatkowe-title"],
+      {
+        y: 30,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        delay: 0.2,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.4,
+        ease: ease,
+      }
+    )
+    gsap.fromTo(
+      ".price-item",
+      {
+        y: 50,
+        opacity: 0,
+      },
+      {
+        duration: 0.6,
+        y: 0,
+        opacity: 1,
+        delay: 0.3,
+        stagger: 0.1,
+        ease: ease,
+      }
+    )
+  }, [])
+
   const data = [
     {
       title: "Ulotka 1-stronna",
@@ -81,144 +118,154 @@ const Cennik = () => {
       <Layout>
         <SEO title="Page two" />
         <section className="container flex flex-col items-center mx-auto py-4">
-          <span className="uppercase text-xs tracking-widest -mb-2 mt-4">
-            Tanie logo firmowe
-          </span>
-          <h1 className="gradient-text text-3xl md:text-4xl font-black ">
-            Projekt logo - cennik{" "}
-          </h1>
-
+          <div className=" cennik-title mt-4">
+            <span className=" uppercase text-xs tracking-widest -mb-2 mt-4">
+              Tanie logo firmowe
+            </span>
+            <h1 className="gradient-text text-3xl md:text-4xl font-black ">
+              Projekt logo - cennik{" "}
+            </h1>
+          </div>
           <div className="triple grid gap-6 grid-cols-1 md:grid-cols-3 my-4 md:my-4">
             {/* PRICING 1 */}
+            <Link to="/zamowienie">
+              <motion.div
+                whileHover={{
+                  scale: 1.03,
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="price-item bg-gray-100 px-4 py-6 rounded-lg "
+              >
+                <div className="flex flex-col items-center">
+                  <h2 className="gradient-text text-2xl m-0 mb-2">1 x logo</h2>
+                  <span className="bg-gradient text-white p-1 px-2 rounded-lg text-sm   font-black">
+                    85 zł netto
+                  </span>
+                </div>
+                <ul className=" mt-4 text-sm text-gray-700 list-disc">
+                  <b>
+                    <li> 1 propozycja logo</li>
+                    <li> 2 poprawki (łącznie)</li>
+                  </b>
+                  <li> Czas realizacji nawet 12h</li>
+                  <li> Pliki źródłowe do edycji</li>
+                  <li> Pliki wektorowe </li>
+                  <li> Formaty: PDF, SVG, EPS, JPG, PNG</li>
+                  <li>Licencja na korzystanie</li>
+                </ul>
+                <motion.button
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  className="mx-auto w-full mt-6 p-0"
+                >
+                  <Link
+                    className="text-gray-700 py-1 px-2 rounded-lg  bg-white hover:text-red-500 font-semibold text-base  leading-tight"
+                    to="/zamowienie"
+                  >
+                    Zamów
+                  </Link>
+                </motion.button>
+              </motion.div>
+            </Link>
 
-            <motion.div
-              whileHover={{
-                scale: 1.03,
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="price-item bg-gray-100 p-4 rounded-lg "
-            >
-              <div className="flex flex-col items-center">
-                <h2 className="gradient-text text-2xl m-0 mb-2">1 x logo</h2>
-                <span className="bg-gradient text-white p-1 px-2 rounded-lg text-sm   font-black">
-                  85 zł netto
-                </span>
-              </div>
-              <ul className=" mt-4 text-sm text-gray-700 list-disc">
-                <b>
-                  <li> 1 propozycja logo</li>
-                  <li> 2 poprawki (łącznie)</li>
-                </b>
-                <li> Czas realizacji nawet 12h</li>
-                <li> Pliki źródłowe do edycji</li>
-                <li> Pliki wektorowe </li>
-                <li> Formaty: PDF, SVG, EPS, JPG, PNG</li>
-                <li>Licencja na korzystanie</li>
-              </ul>
-              <motion.button
-                whileHover={{
-                  scale: 1.1,
-                }}
-                whileTap={{ scale: 0.9 }}
-                className="mx-auto w-full mt-6 p-0"
-              >
-                <Link
-                  className="text-gray-700 py-1 px-2 rounded-lg  bg-white hover:text-red-500 font-semibold text-base  leading-tight"
-                  to="/zamowienie"
-                >
-                  Zamów
-                </Link>
-              </motion.button>
-            </motion.div>
             {/* PRICING 2 */}
-            <motion.div
-              whileHover={{
-                scale: 1.03,
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="price-item bg-gradient p-4 rounded-lg shadow-2xl  my-4 md:my-0"
-            >
-              <div className="flex flex-col items-center">
-                <h2 className="text-white text-2xl m-0 mb-2">2 x logo</h2>
-                <span className="bg-white  text-gray-800 p-1 px-2 rounded-lg text-sm   font-black">
-                  125 zł netto
-                </span>
-              </div>
-              <ul className=" mt-4 text-sm text-white list-disc">
-                <b>
-                  <li> 2 propozycje logo</li>
-                  <li> 4 poprawki (łącznie) </li>
-                </b>
-                <li> Czas realizacji nawet 12h</li>
-                <li> Pliki źródłowe do edycji</li>
-                <li> Pliki wektorowe </li>
-                <li> Formaty: PDF, SVG, EPS, JPG, PNG</li>
-                <li>Licencja na korzystanie</li>
-              </ul>
-              <motion.button
+            <Link to="/zamowienie">
+              <motion.div
                 whileHover={{
-                  scale: 1.1,
+                  scale: 1.03,
                 }}
-                whileTap={{ scale: 0.9 }}
-                className="mx-auto w-full mt-6 p-0"
+                whileTap={{ scale: 0.95 }}
+                className="price-item bg-gradient p-4 rounded-lg shadow-2xl  my-4 md:my-0 px-4 py-6"
               >
-                <Link
-                  className="text-gray-700 py-1 px-2 rounded-lg  bg-white hover:text-red-500 font-semibold text-base  leading-tight"
-                  to="/zamowienie"
+                <div className="flex flex-col items-center">
+                  <h2 className="text-white text-2xl m-0 mb-2">2 x logo</h2>
+                  <span className="bg-white  text-gray-800 p-1 px-2 rounded-lg text-sm   font-black">
+                    125 zł netto
+                  </span>
+                </div>
+                <ul className=" mt-4 text-sm text-white list-disc">
+                  <b>
+                    <li> 2 propozycje logo</li>
+                    <li> 4 poprawki (łącznie) </li>
+                  </b>
+                  <li> Czas realizacji nawet 12h</li>
+                  <li> Pliki źródłowe do edycji</li>
+                  <li> Pliki wektorowe </li>
+                  <li> Formaty: PDF, SVG, EPS, JPG, PNG</li>
+                  <li>Licencja na korzystanie</li>
+                </ul>
+                <motion.button
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  className="mx-auto w-full mt-6 p-0"
                 >
-                  Zamów
-                </Link>
-              </motion.button>
-            </motion.div>
+                  <Link
+                    className="text-gray-700 py-1 px-2 rounded-lg  bg-white hover:text-red-500 font-semibold text-base  leading-tight"
+                    to="/zamowienie"
+                  >
+                    Zamów
+                  </Link>
+                </motion.button>
+              </motion.div>
+            </Link>
+
             {/* PRICING 3 */}
-            <motion.div
-              whileHover={{
-                scale: 1.03,
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="price-item bg-gray-100 p-4 rounded-lg"
-            >
-              <div className="flex flex-col items-center">
-                <h2 className="gradient-text text-2xl m-0 mb-2">3 x logo</h2>
-                <span className="bg-gradient text-white p-1 px-2 rounded-lg text-sm   font-black">
-                  165 zł netto
-                </span>
-              </div>
-              <ul className=" mt-4 text-sm text-gray-700 list-disc">
-                <b>
-                  <li> 3 propozycje logo</li>
-                  <li> 6 poprawek (łącznie) </li>
-                </b>
-                <li> Czas realizacji nawet 12h</li>
-                <li> Pliki źródłowe do edycji</li>
-                <li> Pliki wektorowe </li>
-                <li> Formaty: PDF, SVG, EPS, JPG, PNG</li>
-                <li>Licencja na korzystanie</li>
-              </ul>
-              <motion.button
+            <Link to="/zamowienie">
+              <motion.div
                 whileHover={{
-                  scale: 1.1,
+                  scale: 1.03,
                 }}
-                whileTap={{ scale: 0.9 }}
-                className="mx-auto w-full mt-6 p-0"
+                whileTap={{ scale: 0.95 }}
+                className="price-item bg-gray-100 px-4 py-6 rounded-lg"
               >
-                <Link
-                  className="text-gray-700 py-1 px-2 rounded-lg  bg-white hover:text-red-500 font-semibold text-base  leading-tight"
-                  to="/zamowienie"
+                <div className="flex flex-col items-center">
+                  <h2 className="gradient-text text-2xl m-0 mb-2">3 x logo</h2>
+                  <span className="bg-gradient text-white p-1 px-2 rounded-lg text-sm   font-black">
+                    165 zł netto
+                  </span>
+                </div>
+                <ul className=" mt-4 text-sm text-gray-700 list-disc">
+                  <b>
+                    <li> 3 propozycje logo</li>
+                    <li> 6 poprawek (łącznie) </li>
+                  </b>
+                  <li> Czas realizacji nawet 12h</li>
+                  <li> Pliki źródłowe do edycji</li>
+                  <li> Pliki wektorowe </li>
+                  <li> Formaty: PDF, SVG, EPS, JPG, PNG</li>
+                  <li>Licencja na korzystanie</li>
+                </ul>
+                <motion.button
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  className="mx-auto w-full mt-6 p-0"
                 >
-                  Zamów
-                </Link>
-              </motion.button>
-            </motion.div>
+                  <Link
+                    className="text-gray-700 py-1 px-2 rounded-lg  bg-white hover:text-red-500 font-semibold text-base  leading-tight"
+                    to="/zamowienie"
+                  >
+                    Zamów
+                  </Link>
+                </motion.button>
+              </motion.div>
+            </Link>
           </div>
           {/* dodatnowe uslugi*/}
           <div className="mt-16  flex flex-col items-center">
-            <span className="uppercase text-xs tracking-widest ">
-              Projektowanie graficzne - cennik{" "}
-            </span>
-            <h1 className="gradient-text text-3xl md:text-4xl font-black ">
-              Dodatkowe usługi
-            </h1>
+            <div className="dodatkowe-title ">
+              <span className="uppercase text-xs tracking-widest ">
+                Projektowanie graficzne - cennik{" "}
+              </span>
+              <h1 className="gradient-text text-3xl md:text-4xl font-black ">
+                Dodatkowe usługi
+              </h1>
+            </div>
 
             <div className="triple grid gap-4 grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4  my-0 md:my-4 px-4 md:px-0">
               {data.map(item => {

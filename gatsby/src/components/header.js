@@ -1,7 +1,6 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
-import "../style/header.scss"
 import logo from "../images/tanielogo-logo.svg"
 import { motion } from "framer-motion"
 
@@ -13,7 +12,7 @@ const Header = ({ siteTitle }) => {
     { title: "Kontakt", link: "/kontakt" },
   ]
   return (
-    <header className="navbar shadow-md">
+    <header style={{ zIndex: 1 }} className="navbar shadow-md">
       <div className=" flex flex-row justify-between items-center bg-gray-100 px-4 py-2 ">
         <div className="h-full flex items-center justify-center">
           <img src={logo} style={{ width: "100px", margin: "0 auto" }}></img>

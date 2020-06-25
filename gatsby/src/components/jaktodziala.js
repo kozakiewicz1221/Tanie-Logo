@@ -24,23 +24,25 @@ const Jaktodziala = () => {
     },
   ]
   return (
-    <section className="container mx-auto flex items-center flex-col p-8 md:p-16 mt-6">
-      <div className="mytitle mb-4 md:mb-8 ml-4">
-        <h2 className="gradient-text text-3xl md:text-4xl ">
-          Etapy projektowania logo
-        </h2>
-      </div>
-      <div className="flex flex-row flex-wrap ">
-        {data.map(item => {
-          return (
-            <div className="mt-6 md:mt-0 sm:w-full md:w-1/2 lg:w-1/4 p-1 md:p-4 h-auto flex flex-col  flex-auto">
-              <div className="  bg-gray-100 rounded-lg p-4 shadow-xl flex flex-col flex-auto">
-                <h3 className="text-base gradient-text">{item.title}</h3>
-                <p>{item.content}</p>
+    <section className="bg-gray-100   p-8 md:p-16 ">
+      <div className="container mx-auto  flex items-center flex-col">
+        <div className="mytitle  mb-4 md:mb-8 ml-4">
+          <h2 className="gradient-text text-3xl md:text-4xl ">
+            Etapy projektowania logo
+          </h2>
+        </div>
+        <div className="flex flex-row flex-wrap ">
+          {data.map(item => {
+            return (
+              <div className="mt-6 md:mt-0 sm:w-full md:w-1/2 lg:w-1/4 p-1 md:p-4 h-auto flex flex-col  flex-auto">
+                <div className=" shadow bg-white rounded-lg p-4  flex flex-col flex-auto">
+                  <h3 className="text-base gradient-text">{item.title}</h3>
+                  <p>{item.content}</p>
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
     </section>
   )
