@@ -118,14 +118,23 @@ const Cennik = () => {
       <Layout>
         <SEO title="Page two" />
         <section className="container flex flex-col items-center mx-auto py-4">
+        
+
+
+
+
           <div className=" cennik-title mt-4">
-            <span className=" uppercase text-xs tracking-widest -mb-2 mt-4">
+             <span className=" uppercase text-xs tracking-widest -mb-2 mt-4">
               Tanie logo firmowe
             </span>
             <h1 className="gradient-text text-3xl md:text-4xl font-black ">
               Projekt logo - cennik{" "}
             </h1>
           </div>
+
+        
+
+
           <div className="triple grid gap-6 grid-cols-1 md:grid-cols-3 my-4 md:my-4">
             {/* PRICING 1 */}
             <Link to="/zamowienie">
@@ -142,7 +151,7 @@ const Cennik = () => {
                     85 zł netto
                   </span>
                 </div>
-                <ul className=" mt-4 text-sm text-gray-700 list-disc">
+                <ul className=" mt-4  text-gray-700 list-disc">
                   <b>
                     <li> 1 propozycja logo</li>
                     <li> 2 poprawki (łącznie)</li>
@@ -185,7 +194,7 @@ const Cennik = () => {
                     125 zł netto
                   </span>
                 </div>
-                <ul className=" mt-4 text-sm text-white list-disc">
+                <ul className=" mt-4 text-white list-disc">
                   <b>
                     <li> 2 propozycje logo</li>
                     <li> 4 poprawki (łącznie) </li>
@@ -228,7 +237,7 @@ const Cennik = () => {
                     165 zł netto
                   </span>
                 </div>
-                <ul className=" mt-4 text-sm text-gray-700 list-disc">
+                <ul className=" mt-4 text-gray-700 list-disc">
                   <b>
                     <li> 3 propozycje logo</li>
                     <li> 6 poprawek (łącznie) </li>

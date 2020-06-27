@@ -9,8 +9,9 @@ const Footer = () => {
   const navLinks = [
     { title: "Home", link: "/" },
     { title: "Cennik", link: "/cennik" },
+    { title: "Zamów Logo", link: "/zamowienie" },
+
     { title: "Realizacje", link: "/realizacje" },
-    { title: "Kontakt", link: "/kontakt" },
   ]
   return (
     <section className="container bg-gray-100  rounded-lg flex flex-col items-center mx-auto py-16 mb-10">

@@ -48,13 +48,13 @@ const Faq = () => {
     },
   ]
   return (
-    <section className="container mx-auto py-16 my-4 flex flex-col items-center">
+    <section className="container mx-auto py-16 px-6 my-4 flex flex-col items-center">
       <div className="mytitle mb-4 md:mb-8 ml-4">
         <h2 className="gradient-text text-3xl md:text-4xl ">
           Najczęściej zadawane pytania{" "}
         </h2>
       </div>
-      <div className="flex flex-wrap bg-gray-100 rounded-lg shadow-xl">
+      <div className="flex flex-wrap bg-gray-100 rounded-lg shadow">
         <div className="w-full md:w-1/2">
           <Accordion animate={true} multiple={true} margin="small">
             {data.map(item => {
@@ -63,7 +63,7 @@ const Faq = () => {
                   label={item.label}
                   className="gradient-text py-2"
                 >
-                  <Box className="bg-gray-100 px-2 pb-4">{item.content}</Box>
+                  <Box className="bg-gray-100 text-gray-700 px-2 pb-4">{item.content}</Box>
                 </AccordionPanel>
               )
             })}
@@ -77,7 +77,7 @@ const Faq = () => {
                   label={item.label}
                   className="gradient-text py-2"
                 >
-                  <Box className="bg-gray-100 px-2 pb-4">{item.content}</Box>
+                  <Box className="bg-gray-100 px-2 pb-4 text-gray-700">{item.content}</Box>
                 </AccordionPanel>
               )
             })}

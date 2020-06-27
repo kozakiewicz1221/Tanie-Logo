@@ -231,15 +231,24 @@ const Contactform = () => {
       <ReactTooltip className="rounded-lg " />
 
       <div className="mobile-result flex justify-center text-white  font-black text-lg  bg-gradient w-full fixed bottom-0 py-2 z-50">
-        Wartość zamówienia: {total}zł
+       Twoje zamówienie: {total}zł
       </div>
       <form onSubmit={handleSubmit(onSubmit)} class="order-form">
         <div className="form-inner-wrap">
           <div className="form-left-col">
-            <div className="sticky">
-              <h3 style={{ marginTop: "-15px" }} className="totalprice  ">
-                TWOJE ZAMÓWIENIE
+            <div className="sticky pt-6">
+              <h3 className="gradient-text font-black text-xl ">
+                PODSUMOWANIE ZAMÓWIENIA
               </h3>
+              <div className="my-6">
+                <span className="bg-gradient text-white py-2 px-4 rounded-lg font-black text-2xl">
+                 {total} zł 
+                 <span className=" text-xs font-normal"> netto</span>
+
+               </span>
+              <span  className="text-gray-800 text-xs"> {total *1.23} brutto
+              </span>
+              </div>
 
               <ul className="order-list">
                 <li>
@@ -276,15 +285,12 @@ const Contactform = () => {
                 )}
               </ul>
 
-              <div className="totalprice gradient-text ">
-                DO ZAPŁATY: {total}zł
-              </div>
+             
 
-              <span className="subtitle">Wybierz sposób płatności:</span>
-              <fieldset className="payment-wrapper" onChange={paymentsHandler}>
+              <div className="mt-3">Wybierz sposób płatności:</div>
+              <fieldset className="payment-wrapper mt-2" onChange={paymentsHandler}>
                 <div className="inner-payment">
                   <div>
-                    {" "}
                     <input
                       id="dotpay"
                       name="payment"
@@ -335,6 +341,7 @@ const Contactform = () => {
                 </div>
               </fieldset>
 
+
               <div className="details-inputs">
                 <div>
                   <input
@@ -381,9 +388,10 @@ const Contactform = () => {
                 />
               </div>
               <div className="details-inputs">
-                <div style={{ lineHeight: "1em", marginTop: "-8px" }}>
+                <div style={{ lineHeight: "1em", marginTop: "12px",  marginBottom:"12px" }}>
                   <label>
                     <input
+                    className="policy-checkbox"
                       type="checkbox"
                       placeholder="Policy"
                       name="policy"
@@ -651,7 +659,7 @@ const Contactform = () => {
                 </div>
               </div>
             </fieldset>
-            <h3 className="mt-12">
+            <h3 className="mt-14">
               <span className="number">7</span>Faktura VAT?
             </h3>
             <p>Otrzymasz fakturę razem z projektami</p>

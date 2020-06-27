@@ -2,16 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+.logo-item {
+  opacity: 0
+}
+
 html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  font-family: 'Maven Pro', sans-serif;
+
 }
 
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Maven Pro', sans-serif;
+
 }
 
 article,
@@ -568,8 +575,7 @@ th {
   font-weight: bold;
 }
 
-li {
-}
+li {}
 
 ol li {
   padding-left: 0;
@@ -579,14 +585,13 @@ ul li {
   padding-left: 0;
 }
 
-li > ol {
+li>ol {
   margin-left: 1.45rem;
   margin-bottom: calc(1.45rem / 2);
   margin-top: calc(1.45rem / 2);
 }
 
-li > ul {
-}
+li>ul {}
 
 blockquote *:last-child {
   margin-bottom: 0;
@@ -600,7 +605,7 @@ p *:last-child {
   margin-bottom: 0;
 }
 
-li > p {
+li>p {
   margin-bottom: calc(1.45rem / 2);
 }
 

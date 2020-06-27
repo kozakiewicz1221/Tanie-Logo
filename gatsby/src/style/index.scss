@@ -1,8 +1,6 @@
 @import "_variables.scss";
 
-body {
-  font-family: "Montserrat", sans-serif;
-}
+body {}
 
 h1,
 h2,
@@ -72,4 +70,8 @@ p {
 
 .logas {
   opacity: 0;
+}
+
+.realizacje-title {
+  opacity: 0
 }

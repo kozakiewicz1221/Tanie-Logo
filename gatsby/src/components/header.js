@@ -3,20 +3,25 @@ import PropTypes from "prop-types"
 import React from "react"
 import logo from "../images/tanielogo-logo.svg"
 import { motion } from "framer-motion"
+import { ScrollTo } from "react-scroll-to";
 
 const Header = ({ siteTitle }) => {
   const navLinks = [
     { title: "Home", link: "/" },
     { title: "Cennik", link: "/cennik" },
     { title: "Realizacje", link: "/realizacje" },
-    { title: "Kontakt", link: "/kontakt" },
   ]
   return (
     <header style={{ zIndex: 1 }} className="navbar shadow-md">
+  
       <div className=" flex flex-row justify-between items-center bg-gray-100 px-4 py-2 ">
-        <div className="h-full flex items-center justify-center">
+       
+
+       <Link to="/">
+       <div className="h-full flex items-center justify-center">
           <img src={logo} style={{ width: "100px", margin: "0 auto" }}></img>
         </div>
+       </Link>
         <div className="hidden sm:flex">
           <ul className="flex flex-row">
             {navLinks.map(item => {
@@ -31,6 +36,17 @@ const Header = ({ siteTitle }) => {
                 </li>
               )
             })}
+            <li>
+            <ScrollTo>
+        {({ scroll }) => (
+                          <a onClick={() => scroll({ y: 25000, smooth: true })} style={{cursor:'pointer'}} className="m-2 font-semibold gradient-nav-link text-sm ">Kontakt</a>
+
+        )}
+      </ScrollTo>
+            </li>
+     
+           
+               
           </ul>
         </div>
         <motion.div

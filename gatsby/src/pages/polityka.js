@@ -11,7 +11,7 @@ import gsap, { Power3 } from "gsap"
 import { v4 as uuidv4 } from 'uuid';
 import {motion} from "framer-motion"
 
-const Realizacje = ({data}) => {
+const Polityka = ({data}) => {
   const ease = Power3.easeOut
   useEffect(() => {
 
@@ -86,20 +86,4 @@ Projektowanie logo - portfolio            </span>
   )
 }
 
-export const query = graphql`
-  query logosy {
-    allFile(filter: { relativeDirectory: { eq: "logasy" } }) {
-            edges {
-              node {
-                id
-                childImageSharp {
-                  fluid { 
-                    ...GatsbyImageSharpFluid
-                  }
-                }
-              }
-            }
-          }
-  }
-`
-export default Realizacje
+export default Polityka

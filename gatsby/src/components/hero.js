@@ -56,7 +56,7 @@ const Hero = () => {
               </span>
             </motion.button>
           </Link>
-          <Link to="/zamowienie">
+          <Link to="/cennik">
             <motion.button
               whileHover={{
                 scale: 1.1,
