@@ -1,10 +1,10 @@
-require("dotenv").config()
+require("dotenv").config();
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Tanie Logo Firmowe od 47zł nawet w 12h + Poprawki w cenie`,
+    description: `Zamów najtańsze logo w Polsce! Elastyczne pakiety. Ponad 2000 realizacji. Prawa autorskie na piśmie. Pliki wektorowe i źródłowe. Projekt wizytówki, ulotki.`,
+    author: `Tanie Logo`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -34,18 +34,18 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `Tanie Logo`,
+        short_name: `Tanie Logo`,
         start_url: `/`,
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    `gatsby-plugin-offline`,
 
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
   ],
-}
+};

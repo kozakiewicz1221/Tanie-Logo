@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 
-import axios from "axios"
-import ReactTooltip from "react-tooltip"
-import { GoQuestion } from "react-icons/go"
-import { useForm } from "react-hook-form"
-import { Link } from "gatsby"
-import { AnimatePresence, motion } from "framer-motion"
-import gsap, { Power3, Expo, Back } from "gsap"
+import axios from "axios";
+import ReactTooltip from "react-tooltip";
+import { GoQuestion } from "react-icons/go";
+import { useForm } from "react-hook-form";
+import { Link } from "gatsby";
+import { AnimatePresence, motion } from "framer-motion";
+import gsap, { Power3, Expo, Back } from "gsap";
+import FileUpload from "../components/fileupload";
+import { navigate } from "gatsby";
 
 const Contactform = () => {
-  const ease = Power3.easeOut
+  const ease = Power3.easeOut;
 
   useEffect(() => {
-    gsap.to(".form-wrapper", { opacity: 1, duration: 0.1 })
+    gsap.to(".form-wrapper", { opacity: 1, duration: 0.1 });
     gsap.fromTo(
       [".form-left-col", ".form-right-col"],
       {
@@ -27,26 +29,28 @@ const Contactform = () => {
         stagger: 0.1,
         ease: ease,
       }
-    )
-  }, [])
-  const [name, setName] = useState("")
-  const [mail, setMail] = useState("")
-  const [tel, setTel] = useState("")
+    );
+  }, []);
+  const [name, setName] = useState("");
+  const [mail, setMail] = useState("");
+  const [tel, setTel] = useState("");
   const [customer, setCustomer] = useState({
     name: "",
     email: "",
     tel: "",
-  })
+  });
 
-  const [message, setMessage] = useState("")
-  const [logoQty, setLogoQty] = useState(85)
-  const [payments, setPayments] = useState("dotpay")
-  const [time, setTime] = useState(0)
-  const [timeLabel, setTimeLabel] = useState("standard")
-  const [license, setLicense] = useState(0)
-  const [fvat, setFvat] = useState(false)
-  const [fvatDesc, setFvatdesc] = useState("")
-  const [policy, setPolicy] = useState(false)
+  const [message, setMessage] = useState("");
+  const [logoQty, setLogoQty] = useState(85);
+  const [payments, setPayments] = useState("dotpay");
+  const [time, setTime] = useState(0);
+  const [timeLabel, setTimeLabel] = useState("standard");
+  const [license, setLicense] = useState(0);
+  const [fvat, setFvat] = useState(false);
+  const [fvatDesc, setFvatdesc] = useState("");
+  const [policy, setPolicy] = useState(false);
+  const [file, setFile] = useState([]);
+
   const [dodatkowe, setDodatkowe] = useState([
     {
       name: "Wizytówka",
@@ -121,13 +125,15 @@ const Contactform = () => {
       tip:
         "Konsultacja w sprawie projektowania logo z naszym grafikiem (do 30 min)",
     },
-  ])
-  const [dodatkoweQty, setDodatkoweQty] = useState(0)
+  ]);
+  const [dodatkoweQty, setDodatkoweQty] = useState(0);
 
   // REACT HOOKS FORM
-  const { register, handleSubmit, errors } = useForm()
-  const onSubmit = data => {
-    axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
+  const { register, handleSubmit, errors } = useForm();
+  const onSubmit = (data, e) => {
+    console.log(file);
+    e.preventDefault();
+    axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
     axios({
       method: "POST",
@@ -141,116 +147,125 @@ const Contactform = () => {
         payment: payments,
         razem: total,
         logoQty: logoQty,
-        dodatkowe: dodatkowe.filter(item => item.checked == true),
+        dodatkowe: dodatkowe.filter((item) => item.checked == true),
         description: message,
         license: license,
         time: timeLabel,
         fvat: fvatDesc,
         orderNr: orderNr,
+        file: file,
       },
     }).then(
-      response => {
-        console.log(response)
+      (response) => {
+        console.log(response);
+        navigate("/");
       },
-      error => {
-        console.log(error)
+      (error) => {
+        console.log(error);
       }
-    )
-  }
-  console.log(errors)
+    );
+  };
 
-  const orderNr = Math.floor(Math.random() * 59999)
-  const orderNrLabel = "Zamówienie nr: " + orderNr
-  console.log(orderNr)
+  const orderNr = Math.floor(Math.random() * 59999);
+  const orderNrLabel = "Zamówienie nr: " + orderNr;
   const total =
     parseInt(logoQty) +
     parseInt(time) +
     parseInt(license) +
-    parseInt(dodatkoweQty)
+    parseInt(dodatkoweQty);
 
-  const DodatkoweHandler = e => {
-    let index = e.target.id
-    let robocze = [...dodatkowe]
-    robocze[index].checked = !robocze[index].checked
-    setDodatkowe(robocze)
-    const sumaDodatkow = robocze.filter(item => item.checked == true)
-    let totalDodatkiQty = 0
+  const DodatkoweHandler = (e) => {
+    let index = e.target.id;
+    let robocze = [...dodatkowe];
+    robocze[index].checked = !robocze[index].checked;
+    setDodatkowe(robocze);
+    const sumaDodatkow = robocze.filter((item) => item.checked == true);
+    let totalDodatkiQty = 0;
     for (var i = 0; i < sumaDodatkow.length; i++) {
-      totalDodatkiQty = totalDodatkiQty + sumaDodatkow[i].amount
+      totalDodatkiQty = totalDodatkiQty + sumaDodatkow[i].amount;
     }
-    console.log("Total", totalDodatkiQty)
-    console.log("Robocze", robocze)
-    console.log("Suma dodatków", sumaDodatkow)
-    setDodatkoweQty(totalDodatkiQty)
-  }
+    console.log("Total", totalDodatkiQty);
+    console.log("Robocze", robocze);
+    console.log("Suma dodatków", sumaDodatkow);
+    setDodatkoweQty(totalDodatkiQty);
+  };
 
-  const dodatkoweOutput = dodatkowe.map(item => (
+  const dodatkoweOutput = dodatkowe.map((item) => (
     <div key={item.name} onClick={DodatkoweHandler}>
       <input
         id={item.index}
         checked={item.checked}
         name={item.name}
-        type="checkbox"
+        type='checkbox'
         value={item.amount}
       ></input>
       <label id={item.index} for={item.name}>
         {item.name}
         <span className={!item.checked ? "span-price" : "span-price-checked"}>
           {item.amount}zł
-          <GoQuestion data-tip={item.tip} class="info-icon" />
+          <GoQuestion data-tip={item.tip} class='info-icon' />
         </span>
       </label>
     </div>
-  ))
+  ));
 
-  const paymentsHandler = e => {
-    console.log(payments)
-    setPayments(e.target.value)
-  }
-  const logoQtyHandler = e => {
-    setLogoQty(e.target.value)
-  }
-  const timeHandler = e => {
-    console.log(time)
-    setTime(e.target.value)
-    setTimeLabel(e.target.id)
-  }
+  const paymentsHandler = (e) => {
+    console.log(payments);
+    setPayments(e.target.value);
+  };
+  const logoQtyHandler = (e) => {
+    setLogoQty(e.target.value);
+  };
+  const timeHandler = (e) => {
+    console.log(time);
+    setTime(e.target.value);
+    setTimeLabel(e.target.id);
+  };
 
-  const messageStateHandler = e => {
-    setMessage(e.target.value)
-  }
-  const licenseHandler = e => {
-    setLicense(e.target.value)
-  }
+  const messageStateHandler = (e) => {
+    setMessage(e.target.value);
+  };
+  const licenseHandler = (e) => {
+    setLicense(e.target.value);
+  };
   const vatHandler = () => {
-    setFvat(!fvat)
-  }
+    setFvat(!fvat);
+  };
 
   return (
-    <div className="form-wrapper">
-      <ReactTooltip className="rounded-lg " />
+    <div className='form-wrapper'>
+      <ReactTooltip className='rounded-lg ' />
 
-      <div className="mobile-result flex justify-center text-white  font-black text-lg  bg-gradient w-full fixed bottom-0 py-2 z-50">
-       Twoje zamówienie: {total}zł
+      <div
+        style={{
+          left: "50%",
+          bottom: "20px",
+          transform: "translateX(-50%)",
+          minWidth: "280px",
+        }}
+        className='mobile-result flex justify-center text-white  font-black text-lg  bg-gradient mx-auto fixed  py-2 px-6 rounded-full z-50'
+      >
+        Twoje zamówienie: {total}zł
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} class="order-form">
-        <div className="form-inner-wrap">
-          <div className="form-left-col">
-            <div className="sticky pt-6">
-              <h3 className="gradient-text font-black text-xl ">
+      <form>
+        <div className='form-inner-wrap'>
+          <div className='form-left-col'>
+            <div className='sticky '>
+              <h3 className='gradient-text font-black  '>
                 PODSUMOWANIE ZAMÓWIENIA
               </h3>
-              <div className="my-6">
-                <span className="bg-gradient text-white py-2 px-4 rounded-lg font-black text-2xl">
-                 {total} zł 
-                 <span className=" text-xs font-normal"> netto</span>
-
-               </span>
-              <span  className="text-gray-800 text-xs"> {total *1.23} brutto
-              </span>
+              <div className='my-4'>
+                <span className='bg-gradient text-white py-1 px-2 rounded-lg font-black text-xl'>
+                  {total} zł
+                  <span className=' text-xs font-normal'> netto</span>
+                </span>
+                <span className='text-gray-800 text-xs'>
+                  {" "}
+                  {total * 1.23} brutto
+                </span>
               </div>
 
-              <ul className="order-list">
+              <ul className='order-list'>
                 <li>
                   {logoQty == 85
                     ? "1 x logo"
@@ -265,9 +280,9 @@ const Contactform = () => {
                     : ""}
                 </li>
                 {dodatkowe
-                  .filter(item => item.checked == true)
-                  .map(item => {
-                    return <li>{item.name}</li>
+                  .filter((item) => item.checked == true)
+                  .map((item) => {
+                    return <li>{item.name}</li>;
                   })}
                 <li>Poprawki w cenie</li>
 
@@ -285,139 +300,149 @@ const Contactform = () => {
                 )}
               </ul>
 
-             
-
-              <div className="mt-3">Wybierz sposób płatności:</div>
-              <fieldset className="payment-wrapper mt-2" onChange={paymentsHandler}>
-                <div className="inner-payment">
+              <div className='mt-2  '>Wybierz sposób płatności:</div>
+              <fieldset
+                className='payment-wrapper mt-1'
+                onChange={paymentsHandler}
+              >
+                <div className='inner-payment'>
                   <div>
                     <input
-                      id="dotpay"
-                      name="payment"
-                      type="radio"
-                      value="dotpay"
+                      id='dotpay'
+                      name='payment'
+                      type='radio'
+                      value='dotpay'
                       defaultChecked
                     ></input>
-                    <label for="dotpay">
+                    <label for='dotpay'>
                       Dotpay{" "}
                       <GoQuestion
-                        data-tip="Expresowe płatności bankowe oraz BLIK"
-                        class="info-icon"
+                        data-tip='Expresowe płatności bankowe oraz BLIK'
+                        class='info-icon'
                       />
                     </label>
                   </div>
                   <div>
                     {" "}
                     <input
-                      id="paypal"
-                      name="payment"
-                      type="radio"
-                      value="paypal"
+                      id='paypal'
+                      name='payment'
+                      type='radio'
+                      value='paypal'
                     ></input>
-                    <label for="paypal">
+                    <label for='paypal'>
                       Paypal{" "}
                       <GoQuestion
-                        data-tip="Płatności kartą bankową oraz środkami na koncie PayPal"
-                        class="info-icon"
+                        data-tip='Płatności kartą bankową oraz środkami na koncie PayPal'
+                        class='info-icon'
                       />
                     </label>
                   </div>
                   <div>
                     {" "}
                     <input
-                      id="przelew"
-                      name="payment"
-                      type="radio"
-                      value="przelew"
+                      id='przelew'
+                      name='payment'
+                      type='radio'
+                      value='przelew'
                     ></input>
-                    <label for="przelew">
+                    <label for='przelew'>
                       Przelew{" "}
                       <GoQuestion
-                        data-tip="Płatnośc zwykłym przelewem bankowym."
-                        class="info-icon"
+                        data-tip='Płatnośc zwykłym przelewem bankowym.'
+                        class='info-icon'
                       />
                     </label>
                   </div>
                 </div>
               </fieldset>
 
-
-              <div className="details-inputs">
+              <div className='details-inputs'>
                 <div>
                   <input
-                    type="text"
-                    name="Firstname"
-                    placeholder="Imię i nazwisko"
+                    type='text'
+                    name='Firstname'
+                    placeholder='Imię i nazwisko'
                     ref={register({ required: true, maxLength: 80 })}
-                    onChange={e =>
+                    onChange={(e) =>
                       setCustomer({ ...customer, name: e.target.value })
                     }
                   />
                 </div>
-                <div className="error">
+                <div className='error'>
                   {errors.Firstname && <span>Podaj imię i nazwisko</span>}
                 </div>
               </div>
-              <div className="details-inputs">
+              <div className='details-inputs'>
                 <div>
                   <input
-                    type="text"
-                    placeholder="Adres e-mail"
-                    name="email"
+                    type='text'
+                    placeholder='Adres e-mail'
+                    name='email'
                     ref={register({ required: true, pattern: /^\S+@\S+$/i })}
-                    onChange={e =>
+                    onChange={(e) =>
                       setCustomer({ ...customer, email: e.target.value })
                     }
                   />
                 </div>
 
-                <div className="error">
+                <div className='error'>
                   {errors.email && <span>Podaj poprawny adres e-mail</span>}
                 </div>
               </div>
 
-              <div className="details-inputs">
+              <div className='details-inputs'>
                 <input
-                  type="tel"
-                  placeholder="Nr telefonu"
-                  name="tel"
+                  type='tel'
+                  placeholder='Nr telefonu'
+                  name='tel'
                   ref={register({ maxLength: 12 })}
-                  onChange={e =>
+                  onChange={(e) =>
                     setCustomer({ ...customer, tel: e.target.value })
                   }
                 />
               </div>
-              <div className="details-inputs">
-                <div style={{ lineHeight: "1em", marginTop: "12px",  marginBottom:"12px" }}>
+              <div className='details-inputs'>
+                <div
+                  style={{
+                    lineHeight: "1em",
+                    marginTop: "12px",
+                    marginBottom: "12px",
+                  }}
+                >
                   <label>
                     <input
-                    className="policy-checkbox"
-                      type="checkbox"
-                      placeholder="Policy"
-                      name="policy"
+                      className='policy-checkbox'
+                      type='checkbox'
+                      placeholder='Policy'
+                      name='policy'
                       ref={register({ required: true })}
                     />
                     Zapoznalem się z{" "}
-                    <Link to="/polityka">Polityką prywatności</Link> oraz{" "}
-                    <Link to="/regulamin">Regulaminem</Link>
+                    <Link to='/polityka'>polityką prywatności</Link> oraz{" "}
+                    <Link to='/regulamin'>regulaminem</Link>
                   </label>
                 </div>
                 <div>
-                  <div className="error">
+                  <div className='error'>
                     {errors.policy && <span>Zaznacz to pole</span>}
                   </div>
                 </div>
               </div>
 
-              <button className="submit mb-8 sm:mb-0" type="submit">
+              <button
+                onClick={handleSubmit(onSubmit)}
+                className='submit mb-8 sm:mb-0'
+                type='submit'
+              >
                 Zamawiam !
               </button>
             </div>
           </div>
 
-          <div className="form-right-col">
+          <div className='form-right-col'>
             <h3>
-              <span className="number">1</span>Wybierz ilość propozycji logo
+              <span className='number'>1</span>Wybierz ilość propozycji logo
             </h3>
             <p>
               Określ ilość różnych konceptów logo, ktore chcesz otrzymać. Im
@@ -425,19 +450,19 @@ const Contactform = () => {
               stają się Twoją własnością.
             </p>
             <fieldset onChange={logoQtyHandler}>
-              <div className="flex-inputs">
+              <div className='flex-inputs'>
                 <div>
                   <input
-                    id="logo-qty"
-                    name="logo-qty"
-                    type="radio"
-                    value="85"
+                    id='logo-qty'
+                    name='logo-qty'
+                    type='radio'
+                    value='85'
                     defaultChecked
                   ></input>
-                  <label for="logo-qty">
+                  <label for='logo-qty'>
                     <GoQuestion
-                      data-tip="1 propozycja logo + 2 poprawki"
-                      class="info-icon"
+                      data-tip='1 propozycja logo + 2 poprawki'
+                      class='info-icon'
                     />
                     1 x logo
                     <span
@@ -451,16 +476,16 @@ const Contactform = () => {
                 </div>
                 <div>
                   <input
-                    id="logo-qty2"
-                    name="logo-qty"
-                    type="radio"
-                    value="125"
+                    id='logo-qty2'
+                    name='logo-qty'
+                    type='radio'
+                    value='125'
                   ></input>
-                  <label for="logo-qty2">
+                  <label for='logo-qty2'>
                     2 x logo{" "}
                     <GoQuestion
-                      data-tip="2 propozycje logo + 4 poprawki (łącznie)"
-                      class="info-icon"
+                      data-tip='2 propozycje logo + 4 poprawki (łącznie)'
+                      class='info-icon'
                     />
                     <span
                       className={
@@ -474,16 +499,16 @@ const Contactform = () => {
                 <div>
                   {" "}
                   <input
-                    id="logo-qty3"
-                    name="logo-qty"
-                    type="radio"
-                    value="165"
+                    id='logo-qty3'
+                    name='logo-qty'
+                    type='radio'
+                    value='165'
                   ></input>
-                  <label for="logo-qty3">
+                  <label for='logo-qty3'>
                     3 x logo{" "}
                     <GoQuestion
-                      data-tip="3 propozycje logo + 6 poprawek (łącznie)"
-                      class="info-icon"
+                      data-tip='3 propozycje logo + 6 poprawek (łącznie)'
+                      class='info-icon'
                     />
                     <span
                       className={
@@ -498,16 +523,16 @@ const Contactform = () => {
 
                 <div>
                   <input
-                    id="logo-qty6"
-                    name="logo-qty"
-                    type="radio"
-                    value="0"
+                    id='logo-qty6'
+                    name='logo-qty'
+                    type='radio'
+                    value='0'
                   ></input>
-                  <label for="logo-qty6">
+                  <label for='logo-qty6'>
                     Mam juz logo
                     <GoQuestion
-                      data-tip="Wybierz jeśli potrzebujesz tylko dodatkowych usług"
-                      class="info-icon"
+                      data-tip='Wybierz jeśli potrzebujesz tylko dodatkowych usług'
+                      class='info-icon'
                     />
                     <span
                       className={
@@ -521,16 +546,16 @@ const Contactform = () => {
                 </div>
                 <div>
                   <input
-                    id="logo-qty7"
-                    name="logo-qty"
-                    type="radio"
-                    value="120"
+                    id='logo-qty7'
+                    name='logo-qty'
+                    type='radio'
+                    value='120'
                   ></input>
-                  <label for="logo-qty7">
+                  <label for='logo-qty7'>
                     Wektoryzacja logo{" "}
                     <GoQuestion
-                      data-tip="Wybierz tę opcję jeśli chcesz przerobic swoje logo na format wektorowy. Plik załączysz niżej w formularzu"
-                      class="info-icon"
+                      data-tip='Wybierz tę opcję jeśli chcesz przerobic swoje logo na format wektorowy. Plik załączysz niżej w formularzu'
+                      class='info-icon'
                     />
                     <span
                       className={
@@ -546,37 +571,38 @@ const Contactform = () => {
             </fieldset>
 
             <h3>
-              <span className="number">2</span>Wybierz dodatkowe usługi
+              <span className='number'>2</span>Wybierz dodatkowe usługi
             </h3>
             <p>Projektujemy również inne rzeczy.</p>
             <fieldset>
-              <div className="flex-inputs">{dodatkoweOutput}</div>
+              <div className='flex-inputs'>{dodatkoweOutput}</div>
             </fieldset>
 
             <fieldset>
               <h3>
-                <span className="number">3</span>Opis swój projekt
+                <span className='number'>3</span> Opisz swoj projekt
               </h3>
 
               <textarea
-                id="msg"
-                name="message"
-                placeholder="Opisz profil swojej działalności, sugestie i inne uwagi dot. projektu/ów."
+                id='msg'
+                name='message'
+                placeholder='Opisz profil swojej działalności, sugestie i inne uwagi dot. projektu/ów.'
                 onChange={messageStateHandler}
               ></textarea>
             </fieldset>
             <fieldset>
               <h3>
-                <span className="number">4</span>Załącz plik
+                <span className='number'>4</span>Załącz plik
               </h3>
               <p>
                 Możesz załączyć szkice, koncepty, inspiracje albo gotowe logo,
                 które wymaga wektoryzacji.
               </p>
+              <FileUpload setFile={setFile} file={file} />
             </fieldset>
 
             <h3>
-              <span className="number">5</span>Czas realizacji
+              <span className='number'>5</span>Czas realizacji
             </h3>
             <p>
               Standardowy czas projektowania logotypu to najczęściej od 2 do 7
@@ -584,47 +610,47 @@ const Contactform = () => {
             </p>
 
             <fieldset onChange={timeHandler}>
-              <div className="flex-inputs block">
+              <div className='flex-inputs block'>
                 <div>
                   {" "}
                   <input
-                    id="standard"
-                    name="time"
-                    type="radio"
-                    value="0"
+                    id='standard'
+                    name='time'
+                    type='radio'
+                    value='0'
                     defaultChecked
                   ></input>
-                  <label for="standard">
-                    Standard 2-7 dni <span className="span-price"> 0zł</span>
+                  <label for='standard'>
+                    Standard 2-7 dni <span className='span-price'> 0zł</span>
                   </label>
                 </div>
                 <div>
                   <input
-                    id="express"
-                    name="time"
-                    type="radio"
-                    value="55"
+                    id='express'
+                    name='time'
+                    type='radio'
+                    value='55'
                   ></input>
-                  <label for="express">
-                    Express (2 dni) <span className="span-price"> 55zl</span>
+                  <label for='express'>
+                    Express (2 dni) <span className='span-price'> 55zl</span>
                   </label>
                 </div>
                 <div>
                   <input
-                    id="turbo"
-                    name="time"
-                    type="radio"
-                    value="115"
+                    id='turbo'
+                    name='time'
+                    type='radio'
+                    value='115'
                   ></input>
-                  <label for="turbo">
-                    Turbo (24h) <span className="span-price"> 115zl</span>
+                  <label for='turbo'>
+                    Turbo (24h) <span className='span-price'> 115zl</span>
                   </label>
                 </div>
               </div>
             </fieldset>
 
             <h3>
-              <span className="number">6</span>Prawa autorskie
+              <span className='number'>6</span>Prawa autorskie
             </h3>
             <p>
               Do każego zamówienia otzymujesz za darmo licencję na korzystanie z
@@ -633,48 +659,48 @@ const Contactform = () => {
               logotypu w całkowicie dowolny sposób.
             </p>
             <fieldset onChange={licenseHandler}>
-              <div className="flex flex-row">
-                <div className="">
+              <div className='flex flex-row mb-6'>
+                <div className=''>
                   <input
-                    id="license"
-                    name="license"
-                    type="radio"
-                    value="0"
+                    id='license'
+                    name='license'
+                    type='radio'
+                    value='0'
                     defaultChecked
                   ></input>
-                  <label for="license">
-                    Licencja <span className="span-price"> 0zł</span>
+                  <label for='license'>
+                    Licencja <span className='span-price'> 0zł</span>
                   </label>
                 </div>
                 <div>
                   <input
-                    id="license2"
-                    name="license"
-                    type="radio"
-                    value="99"
+                    id='license2'
+                    name='license'
+                    type='radio'
+                    value='99'
                   ></input>
-                  <label for="license2">
-                    Prawa autorskie <span className="span-price">99zł</span>
+                  <label for='license2'>
+                    Prawa autorskie <span className='span-price'>99zł</span>
                   </label>
                 </div>
               </div>
             </fieldset>
-            <h3 className="mt-14">
-              <span className="number">7</span>Faktura VAT?
+            <h3 className='mt-14'>
+              <span className='number'>7</span>Faktura VAT?
             </h3>
             <p>Otrzymasz fakturę razem z projektami</p>
 
             <fieldset onChange={vatHandler}>
               <input
-                id="fvat"
-                name="fvat"
-                type="radio"
-                value="0"
+                id='fvat'
+                name='fvat'
+                type='radio'
+                value='0'
                 defaultChecked
               ></input>
-              <label for="fvat">NIE</label>
-              <input id="fvat2" name="fvat" type="radio" value="99"></input>
-              <label for="fvat2">TAK </label>
+              <label for='fvat'>NIE</label>
+              <input id='fvat2' name='fvat' type='radio' value='99'></input>
+              <label for='fvat2'>TAK </label>
             </fieldset>
             <AnimatePresence>
               {fvat == true && (
@@ -691,11 +717,11 @@ const Contactform = () => {
                   <p>Podaj dane do faktury</p>
 
                   <textarea
-                    id="faktura"
-                    name="faktura"
-                    placeholder="Podaj NIP, nazwę firmy oraz adres"
-                    onChange={e => setFvatdesc(e.target.value)}
-                    className="-mt-2"
+                    id='faktura'
+                    name='faktura'
+                    placeholder='Podaj NIP, nazwę firmy oraz adres'
+                    onChange={(e) => setFvatdesc(e.target.value)}
+                    className='-mt-2'
                   ></textarea>
                 </motion.fieldset>
               )}
@@ -704,7 +730,7 @@ const Contactform = () => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Contactform
+export default Contactform;

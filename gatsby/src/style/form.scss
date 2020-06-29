@@ -1,14 +1,15 @@
 @import "_variables.scss";
 
 .form-wrapper {
-  opacity: 0
+  opacity: 0;
+  border-bottom: 1px solid lightgrey;
 }
 
 h3 {
-  color: $color1;
-  margin-bottom: 15px;
+  color: black;
   letter-spacing: 1px;
   font-weight: 600;
+  font-size: 20px;
 }
 
 h4 {
@@ -25,7 +26,7 @@ h4 {
 
 .sticky {
   position: sticky;
-  top: 85px;
+  top: 95px;
 }
 
 .form-right-col p {
@@ -160,7 +161,8 @@ h4 {
   margin-bottom: 14px;
 }
 
-.policy-accept {}
+.policy-accept {
+}
 
 .policy-accept label {
   margin-left: 8px;
@@ -354,10 +356,10 @@ button.submit {
   margin-bottom: 25px;
 }
 
-.form-right-col input[type="checkbox"]:checked+label,
-.form-right-col input[type="radio"]:checked+label,
-.payment-wrapper input[type="radio"]:checked+label,
-.payment-wrapper input[type="checkbox"]:checked+label {
+.form-right-col input[type="checkbox"]:checked + label,
+.form-right-col input[type="radio"]:checked + label,
+.payment-wrapper input[type="radio"]:checked + label,
+.payment-wrapper input[type="checkbox"]:checked + label {
   background: $color1;
   color: white;
   transition: 0.2s all;
@@ -388,7 +390,6 @@ textarea {
   padding-left: 15px;
   border-radius: $radius;
   border: none;
-  box-shadow: $shadow2;
   color: $color1;
   padding-top: 15px;
 }
@@ -443,4 +444,18 @@ input:-webkit-autofill:active {
   background: $color1;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.file-upload-btn {
+  background: $color1;
+  color: white;
+  transition: 0.2s all;
+  box-shadow: $shadow2;
+  padding: 5px 10px;
+  font-weight: 700;
+  border-radius: 9px;
+  &:hover {
+    background: black;
+    color: white;
+  }
 }

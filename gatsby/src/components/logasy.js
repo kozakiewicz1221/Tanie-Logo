@@ -1,6 +1,6 @@
-import React from "react"
-import { StaticQuery, graphql } from "gatsby"
-import Img from "gatsby-image"
+import React from "react";
+import { StaticQuery, graphql } from "gatsby";
+import Img from "gatsby-image";
 
 const Logasy = function() {
   return (
@@ -21,12 +21,12 @@ const Logasy = function() {
           }
         }
       `}
-      render={data => (
-        <div className="">
-          <div className="flex flex-row flex-wrap">
-            {data.allFile.edges.map(logo => (
+      render={(data) => (
+        <div className=''>
+          <div className='flex flex-row flex-wrap'>
+            {data.allFile.edges.map((logo) => (
               <Img
-                className="w-1/3 md:w-1/5 lg:w-1/4 xl:w-1/6"
+                className='w-1/3 md:w-1/5 lg:w-1/4 xl:w-1/6 '
                 fluid={logo.node.childImageSharp.fluid}
               />
             ))}
@@ -34,6 +34,6 @@ const Logasy = function() {
         </div>
       )}
     />
-  )
-}
-export default Logasy
+  );
+};
+export default Logasy;
