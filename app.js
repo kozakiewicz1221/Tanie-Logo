@@ -7,6 +7,7 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var indexRouter = require("./routes/index");
 const mysql = require("mysql");
+require("dotenv").config();
 
 var app = express();
 

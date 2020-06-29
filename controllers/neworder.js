@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 const moment = require("moment");
 const SQL = require("sql-template-strings");
 const mysql = require("mysql");
+require("dotenv").config();
 
 exports.neworder = async (req, res) => {
   let arr = [];
@@ -12,9 +13,9 @@ exports.neworder = async (req, res) => {
   // DB CONFIG
   var db = mysql.createConnection({
     host: "77.72.0.150",
-    user: "backend_app",
-    password: "!LoLeQ3@1",
-    database: "backend_app",
+    user: process.env.DB_USER,
+    password: process.env.MAIL_PASS,
+    database: process.env.NAME,
   });
   db.connect((err) => {
     if (err) throw err;
