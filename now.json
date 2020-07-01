@@ -8,9 +8,39 @@
       "methods": ["GET"]
     },
     {
+      "src": "/test",
+      "dest": "/app.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/test",
+      "dest": "/app.js",
+      "methods": ["post"]
+    },
+    {
+      "src": "/mongo",
+      "dest": "/app.js",
+      "methods": ["GET"]
+    },
+    {
       "src": "/order",
       "dest": "/app.js",
       "methods": ["POST"]
+    },
+    {
+      "src": "/api/order",
+      "dest": "/app.js",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/api/deleteorders",
+      "dest": "/app.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/api/admin",
+      "dest": "/app.js",
+      "methods": ["GET"]
     }
   ]
 }

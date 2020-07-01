@@ -1,48 +1,10 @@
 const nodemailer = require("nodemailer");
 const moment = require("moment");
-const SQL = require("sql-template-strings");
-const mysql = require("mysql");
+const MongoClient = require("mongodb").MongoClient;
 require("dotenv").config();
 
 exports.neworder = async (req, res) => {
-  let arr = [];
-  let dodatkowe = await req.body.dodatkowe.map((x) => {
-    arr.push(x.name);
-  });
-  arr = arr.join(", ");
-  // DB CONFIG
-  var db = mysql.createConnection({
-    host: "77.72.0.150",
-    user: process.env.DB_USER,
-    password: process.env.MAIL_PASS,
-    database: process.env.NAME,
-  });
-  db.connect((err) => {
-    if (err) throw err;
-    console.log("connected to db");
-  });
-  // DB QUERY
-  db.query(
-    SQL`INSERT INTO orders VALUES(
-      DEFAULT, 
-      ${req.body.name}, 
-    ${req.body.tel},
-    ${req.body.email}, 
-    ${req.body.logoQty},
-    ${arr},
-    ${req.body.license},
-    ${req.body.time},
-    ${req.body.description},
-    ${req.body.payment},
-    ${req.body.fvat},
-    "file", 
-    "${moment().format()}" )`,
-    (err, result) => {
-      if (err) throw err;
-      console.log("done");
-    }
-  );
-  // MAILS SENDER
+  // // MAILS SENDER
   console.log();
   const adminMsg = `
   <h1> Nowe zamówienie Tanie-logo</h1>
@@ -65,11 +27,11 @@ exports.neworder = async (req, res) => {
   <h1 >Tanie-logo.pl</h1>
   <h2 >Twoje zamówienie nr #${req.body.orderNr}</h2>
 
-  <p>Zamówienie zostanie zrealizowane niezwłocznie po zaksięgowaniu płatności.</br> Jeśli nie dokonałeś jeszcze płatności to możesz to zrobić teraz. 
+  <p>Zamówienie zostanie zrealizowane niezwłocznie po zaksięgowaniu płatności.</br> Jeśli nie dokonałeś jeszcze płatności to możesz to zrobić teraz.
   </p>
     <div>
         <a  href="https://google.pl">Płatnośc przez Dotpay</a>
-    </div>  
+    </div>
     <div>
       <a href="https://google.pl">Płatność przelewem bankowym</a>
     </div>
@@ -82,7 +44,7 @@ exports.neworder = async (req, res) => {
       secure: true,
       auth: {
         user: "kontakt@tanie-logo.pl",
-        pass: "!Loleq123",
+        pass: "!LoLeQ3@1",
       },
       tls: {
         rejectUnauthorized: false,
@@ -111,22 +73,27 @@ exports.neworder = async (req, res) => {
   }
 
   main().catch(console.error);
-  console.log(req.body.file);
-};
 
-exports.deleteorders = (req, res) => {
-  var db = mysql.createConnection({
-    host: "77.72.0.150",
-    user: "backend_app",
-    password: "!LoLeQ3@1",
-    database: "backend_app",
+  let arr = [];
+  let dodatkowe = await req.body.dodatkowe.map((x) => {
+    arr.push(x.name);
   });
-  db.connect((err) => {
-    if (err) throw err;
-  });
-  let sql = `DELETE FROM orders`;
-  db.query(sql, (err, result) => {
-    console.log("---Deleted all orders----");
-    res.send("ok");
+  arr = arr.join(", ");
+
+  // SAVE ORDER TO DB
+  const uri =
+    "mongodb+srv://emir1221:!Loleq123@cluster0-xwshn.mongodb.net/TanieLogo?retryWrites=true&w=majority";
+
+  MongoClient.connect(uri, { useUnifiedTopology: true }, (error, client) => {
+    if (error) console.log(error);
+    const db = client.db("TanieLogo");
+
+    db.collection("orders").insertOne(
+      { ...req.body, dodatkowe: arr },
+      (err, result) => {
+        if (err) console.log(err);
+        res.send("ok");
+      }
+    );
   });
 };

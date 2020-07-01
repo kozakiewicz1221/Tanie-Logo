@@ -10,7 +10,9 @@ exports.admin = (req, res) => {
     database: "backend_app",
   });
   db.connect((err) => {
-    if (err) throw err;
+    if (err) {
+      res.send(err);
+    }
   });
   db.query(SQL`SELECT * FROM orders ORDER BY id DESC`, (err, result) => {
     if (err) throw err;
